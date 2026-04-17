@@ -1,12 +1,12 @@
-import { V } from '@angular/cdk/keycodes';
 import { NgClass } from '@angular/common';
-import { Component, ElementRef, signal, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, signal, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ChatService } from '../chat-service';
 
 @Component({
   selector: 'app-simple-chat',
@@ -19,6 +19,8 @@ export class SimpleChat {
   @ViewChild('chatContent')
   private chatContent!: ElementRef<HTMLDivElement>;
 
+  private chatService = inject(ChatService);
+
   userInput = signal('');
   isLoading = signal(false);
 
@@ -30,10 +32,25 @@ export class SimpleChat {
     this.trimUserMessage();
     if (this.userInput() !== '' && !this.isLoading()) {
       this.updateMessages({ text: this.userInput(), sender: 'user' });
-      this.userInput.set('');
+      this.sendChatMessage();
       this.isLoading.set(true);
-      this.simulateBotResponse();
     }
+  }
+
+  private sendChatMessage() {
+    this.chatService.sendChatMessage(this.userInput())
+    .subscribe({
+      next: (response) => {
+        this.updateMessages({ text: response.message, sender: 'bot' });
+        this.isLoading.set(false);
+        this.userInput.set('');
+      },
+      error: (err) => {
+        console.error('Error sending message:', err);
+        this.updateMessages({ text: 'Sorry, something went wrong. Please try again.', sender: 'bot' });
+        this.isLoading.set(false);
+      }
+    });
   }
 
   private updateMessages(message: { text: string; sender: 'user' | 'bot' }) {
@@ -44,14 +61,6 @@ export class SimpleChat {
   private trimUserMessage() {
     const trimmed = this.userInput().trim();
     this.userInput.set(trimmed);
-  }
-
-  private simulateBotResponse() {
-    setTimeout(() => {
-      const botResponse = 'This is a simulated response from the bot.';
-      this.updateMessages({ text: botResponse, sender: 'bot' });
-      this.isLoading.set(false);
-    }, 2000);
   }
 
   private scrollToBottom() {
