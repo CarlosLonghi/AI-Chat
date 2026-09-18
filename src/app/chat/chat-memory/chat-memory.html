@@ -1,0 +1,28 @@
+<div class="chat-page">
+  <aside class="chat-list">
+    <button matButton="filled" class="new-chat" routerLink="/chat-memory">
+      <mat-icon>add</mat-icon>
+      New chat
+    </button>
+
+    <mat-nav-list>
+      @for (chat of chats(); track chat.id) {
+        <a mat-list-item
+          [routerLink]="['/chat-memory', chat.id]"
+          routerLinkActive
+          #rla="routerLinkActive"
+          [activated]="rla.isActive">
+          <span matListItemTitle>{{ chat.description }}</span>
+        </a>
+      }
+    </mat-nav-list>
+  </aside>
+
+  <app-chat-window
+    class="chat-window"
+    title="Chat Memory"
+    [messages]="messages()"
+    [isLoading]="isLoading()"
+    (send)="sendMessage($event)"
+  />
+</div>

@@ -1,49 +1,32 @@
-import { NgClass } from '@angular/common';
-import { Component, ElementRef, inject, signal, ViewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Component, inject, signal } from '@angular/core';
+import { ChatMessage } from '../chat-models';
 import { ChatService } from '../chat-service';
+import { ChatWindow } from '../chat-window/chat-window';
 
 @Component({
   selector: 'app-simple-chat',
-  imports: [MatCardModule, MatInputModule, MatButtonModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, FormsModule, NgClass],
+  imports: [ChatWindow],
   templateUrl: './simple-chat.html',
   styleUrl: './simple-chat.scss',
 })
 export class SimpleChat {
 
-  @ViewChild('chatContent')
-  private chatContent!: ElementRef<HTMLDivElement>;
-
   private chatService = inject(ChatService);
 
-  userInput = signal('');
   isLoading = signal(false);
 
-  messages = signal([
+  messages = signal<ChatMessage[]>([
     { text: 'Hello! How can I assist you today?', sender: 'bot' }
   ]);
 
-  sendMessage() {
-    this.trimUserMessage();
-    if (this.userInput() !== '' && !this.isLoading()) {
-      this.updateMessages({ text: this.userInput(), sender: 'user' });
-      this.sendChatMessage();
-      this.isLoading.set(true);
-    }
-  }
-
-  private sendChatMessage() {
-    this.chatService.sendChatMessage(this.userInput())
+  sendMessage(text: string) {
+    this.updateMessages({ text, sender: 'user' });
+    this.isLoading.set(true);
+    this.chatService.simpleChat(text)
     .subscribe({
       next: (response) => {
         this.updateMessages({ text: response.message, sender: 'bot' });
         this.isLoading.set(false);
-        this.userInput.set('');
       },
       error: (err) => {
         console.error('Error sending message:', err);
@@ -53,21 +36,7 @@ export class SimpleChat {
     });
   }
 
-  private updateMessages(message: { text: string; sender: 'user' | 'bot' }) {
+  private updateMessages(message: ChatMessage) {
     this.messages.update(messages => [...messages, message]);
-    this.scrollToBottom();
-  }
-
-  private trimUserMessage() {
-    const trimmed = this.userInput().trim();
-    this.userInput.set(trimmed);
-  }
-
-  private scrollToBottom() {
-    setTimeout(() => {
-      if (this.chatContent) {
-        this.chatContent.nativeElement.scrollTop = this.chatContent.nativeElement.scrollHeight;
-      }
-    }, 50);
   }
 }

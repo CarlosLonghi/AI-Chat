@@ -1,0 +1,46 @@
+<mat-card class="chat-container">
+  <mat-card-header>
+    <mat-card-title>{{ title() }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="chat-content" #chatContent>
+    <div class="messages">
+      @for (message of messages(); track $index) {
+        <div class="message">
+          <div class="message-bubble" [ngClass]="{'user': message.sender === 'user', 'bot': message.sender === 'bot'}">
+            {{ message.text }}
+          </div>
+        </div>
+      }
+      @if (isLoading()) {
+        <div class="message">
+          <div class="message-bubble bot">
+            <mat-progress-spinner diameter="20" mode="indeterminate"></mat-progress-spinner>
+          </div>
+        </div>
+      }
+    </div>
+  </mat-card-content>
+
+  <div class="chat-input">
+    <mat-form-field class="full-width">
+      @if (isLoading()) {
+        <mat-label>Waiting for response...</mat-label>
+      } @else {
+        <mat-label>Ask a question...</mat-label>
+      }
+      <input matInput
+        [ngModel]="userInput()"
+        (ngModelChange)="userInput.set($event)"
+        (keyup.enter)="sendMessage()"
+        maxlength="256"
+        placeholder="Type your question here..."
+        [disabled]="isLoading()"
+      />
+      <mat-hint align="end">{{userInput().length}} / 256</mat-hint>
+
+      <button matSuffix matIconButton aria-label="Send" (click)="sendMessage()" [disabled]="userInput().trim() === '' || isLoading()">
+        <mat-icon>send</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+</mat-card>

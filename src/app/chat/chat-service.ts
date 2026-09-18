@@ -1,6 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { ChatResponse } from './chat-response';
+import {
+  ChatHistoryResponse,
+  ChatReplyResponse,
+  ChatSummaryResponse,
+  NewChatResponse,
+  SimpleChatResponse,
+} from './chat-models';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +16,23 @@ export class ChatService {
 
   private http = inject(HttpClient);
 
-  sendChatMessage(message: string) {
-    return this.http.post<ChatResponse>(this.API, { message });
+  simpleChat(message: string) {
+    return this.http.post<SimpleChatResponse>(`${this.API}/simple`, { message });
+  }
+
+  getAllChats() {
+    return this.http.get<ChatSummaryResponse[]>(`${this.API}/memory`);
+  }
+
+  getChatMessages(chatId: string) {
+    return this.http.get<ChatHistoryResponse[]>(`${this.API}/memory/${chatId}`);
+  }
+
+  newChat(message: string) {
+    return this.http.post<NewChatResponse>(`${this.API}/memory/new`, { message });
+  }
+
+  continueChat(chatId: string, message: string) {
+    return this.http.post<ChatReplyResponse>(`${this.API}/memory/${chatId}`, { message });
   }
 }

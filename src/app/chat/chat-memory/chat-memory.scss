@@ -1,0 +1,20 @@
+.chat-page {
+  display: flex;
+  gap: 16px;
+  height: 80vh;
+  margin: 32px;
+}
+
+.chat-list {
+  flex: 0 0 280px;
+  overflow-y: auto;
+}
+
+.new-chat {
+  width: 100%;
+}
+
+.chat-window {
+  flex: 1 1 auto;
+  min-width: 0;
+}
