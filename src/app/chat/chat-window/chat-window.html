@@ -7,7 +7,11 @@
       @for (message of messages(); track $index) {
         <div class="message">
           <div class="message-bubble" [ngClass]="{'user': message.sender === 'user', 'bot': message.sender === 'bot'}">
-            {{ message.text }}
+            @if (message.sender === 'bot') {
+              <div class="markdown" [innerHTML]="message.text | markdown"></div>
+            } @else {
+              {{ message.text }}
+            }
           </div>
         </div>
       }

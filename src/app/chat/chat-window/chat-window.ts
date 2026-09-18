@@ -7,10 +7,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ChatMessage } from '../chat-models';
+import { MarkdownPipe } from '../markdown/markdown-pipe';
 
 @Component({
   selector: 'app-chat-window',
-  imports: [MatCardModule, MatInputModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, FormsModule, NgClass],
+  imports: [MatCardModule, MatInputModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, FormsModule, NgClass, MarkdownPipe],
   templateUrl: './chat-window.html',
   styleUrl: './chat-window.scss',
 })
