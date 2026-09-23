@@ -1,18 +1,24 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, computed, effect, inject, input, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { ChatHistoryResponse, ChatMessage, ChatSummaryResponse } from '../chat-models';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ChatHistoryResponse, ChatMessage, ChatProblemDetail, ChatSummaryResponse } from '../chat-models';
 import { ChatService } from '../chat-service';
 import { ChatWindow } from '../chat-window/chat-window';
+import { DeleteChatDialog } from './delete-chat-dialog/delete-chat-dialog';
+import { RenameChatDialog } from './rename-chat-dialog/rename-chat-dialog';
 
 const WELCOME_MESSAGE: ChatMessage = { text: 'Hello! How can I assist you today?', sender: 'bot' };
 const ERROR_MESSAGE: ChatMessage = { text: 'Sorry, something went wrong. Please try again.', sender: 'bot' };
 
 @Component({
   selector: 'app-chat-memory',
-  imports: [ChatWindow, MatButtonModule, MatIconModule, MatListModule, RouterLink, RouterLinkActive],
+  imports: [ChatWindow, MatButtonModule, MatIconModule, MatListModule, MatMenuModule, RouterLink, RouterLinkActive],
   templateUrl: './chat-memory.html',
   styleUrl: './chat-memory.scss',
 })
@@ -20,10 +26,13 @@ export class ChatMemory {
 
   private chatService = inject(ChatService);
   private router = inject(Router);
+  private dialog = inject(MatDialog);
+  private snackBar = inject(MatSnackBar);
 
   chatId = input<string>();
 
   chats = signal<ChatSummaryResponse[]>([]);
+  title = computed(() => this.chats().find(c => c.id === this.chatId())?.description ?? 'Chat Memory');
   messages = signal<ChatMessage[]>([WELCOME_MESSAGE]);
   isLoading = signal(false);
 
@@ -43,6 +52,70 @@ export class ChatMemory {
     } else {
       this.startChat(text);
     }
+  }
+
+  renameChat(chat: ChatSummaryResponse) {
+    this.dialog
+      .open<RenameChatDialog, string, string>(RenameChatDialog, { data: chat.description, width: '400px' })
+      .afterClosed()
+      .subscribe(description => {
+        if (description === undefined || description === chat.description) return;
+
+        this.chatService.updateChatDescription(chat.id, description).subscribe({
+          next: saved => this.chats.update(chats =>
+            chats.map(c => (c.id === saved.id ? { ...c, description: saved.description } : c))),
+          error: (err) => {
+            if (err instanceof HttpErrorResponse && err.status === 404) {
+              this.removeChat(chat.id);
+              this.notify('This chat no longer exists.');
+              return;
+            }
+            console.error('Error renaming chat:', err);
+            this.notify(this.errorMessage(err, 'Could not rename the chat.'));
+          },
+        });
+      });
+  }
+
+  deleteChat(chat: ChatSummaryResponse) {
+    this.dialog
+      .open<DeleteChatDialog, string, boolean>(DeleteChatDialog, { data: chat.description, width: '400px' })
+      .afterClosed()
+      .subscribe(confirmed => {
+        if (!confirmed) return;
+
+        this.chatService.deleteChat(chat.id).subscribe({
+          next: () => {
+            this.removeChat(chat.id);
+            this.notify('Chat deleted.');
+          },
+          error: (err) => {
+            // Already gone (e.g. deleted in another tab): same outcome the user asked for.
+            if (err instanceof HttpErrorResponse && err.status === 404) {
+              this.removeChat(chat.id);
+              return;
+            }
+            console.error('Error deleting chat:', err);
+            this.notify(this.errorMessage(err, 'Could not delete the chat.'));
+          },
+        });
+      });
+  }
+
+  private removeChat(chatId: string) {
+    this.chats.update(chats => chats.filter(c => c.id !== chatId));
+    if (this.chatId() === chatId) {
+      this.router.navigate(['/chat-memory']);
+    }
+  }
+
+  private notify(message: string) {
+    this.snackBar.open(message, 'Close', { duration: 5000 });
+  }
+
+  private errorMessage(err: unknown, fallback: string): string {
+    const problem = err instanceof HttpErrorResponse ? (err.error as ChatProblemDetail | null) : null;
+    return problem?.errors?.['description'] ?? problem?.detail ?? fallback;
   }
 
   private loadChats() {

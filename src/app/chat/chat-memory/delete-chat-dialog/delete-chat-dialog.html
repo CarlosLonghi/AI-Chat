@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Delete chat?</h2>
+<mat-dialog-content>
+  “{{ title }}” and its entire history will be permanently deleted. This cannot be undone.
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button matButton mat-dialog-close cdkFocusInitial>Cancel</button>
+  <button matButton="filled" [mat-dialog-close]="true">Delete</button>
+</mat-dialog-actions>

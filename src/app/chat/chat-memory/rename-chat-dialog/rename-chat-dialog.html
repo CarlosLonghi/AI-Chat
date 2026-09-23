@@ -1,0 +1,17 @@
+<form [formGroup]="form" (ngSubmit)="save()">
+  <h2 mat-dialog-title>Rename chat</h2>
+  <mat-dialog-content>
+    <mat-form-field class="full-width">
+      <mat-label>Title</mat-label>
+      <input matInput cdkFocusInitial formControlName="title" [maxlength]="maxLength" />
+      <mat-hint align="end">{{ title.value.length }} / {{ maxLength }}</mat-hint>
+      @if (title.hasError('required') || title.hasError('blank')) {
+        <mat-error>Title is required</mat-error>
+      }
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button matButton type="button" mat-dialog-close>Cancel</button>
+    <button matButton="filled" type="submit" [disabled]="title.invalid">Save</button>
+  </mat-dialog-actions>
+</form>

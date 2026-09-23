@@ -22,6 +22,12 @@ export interface ChatSummaryResponse {
   description: string;
 }
 
+export interface ChatProblemDetail {
+  status?: number;
+  detail?: string;
+  errors?: Record<string, string>;
+}
+
 export interface ChatHistoryResponse {
   content: string;
   type: 'USER' | 'ASSISTANT' | 'SYSTEM' | 'TOOL';
