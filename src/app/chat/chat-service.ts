@@ -35,4 +35,12 @@ export class ChatService {
   continueChat(chatId: string, message: string) {
     return this.http.post<ChatReplyResponse>(`${this.API}/memory/${chatId}`, { message });
   }
+
+  updateChatDescription(chatId: string, description: string) {
+    return this.http.patch<ChatSummaryResponse>(`${this.API}/memory/${chatId}`, { description });
+  }
+
+  deleteChat(chatId: string) {
+    return this.http.delete<void>(`${this.API}/memory/${chatId}`);
+  }
 }

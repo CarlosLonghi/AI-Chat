@@ -54,4 +54,18 @@ describe('ChatService', () => {
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual({ message: 'oi' });
   });
+
+  it('should rename a chat', () => {
+    service.updateChatDescription('abc', 'Novo').subscribe();
+    const req = http.expectOne('/api/v1/chat/memory/abc');
+    expect(req.request.method).toBe('PATCH');
+    expect(req.request.body).toEqual({ description: 'Novo' });
+  });
+
+  it('should delete a chat', () => {
+    service.deleteChat('abc').subscribe();
+    const req = http.expectOne('/api/v1/chat/memory/abc');
+    expect(req.request.method).toBe('DELETE');
+    expect(req.request.body).toBeNull();
+  });
 });
