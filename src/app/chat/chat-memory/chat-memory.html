@@ -7,20 +7,38 @@
 
     <mat-nav-list>
       @for (chat of chats(); track chat.id) {
-        <a mat-list-item
-          [routerLink]="['/chat-memory', chat.id]"
-          routerLinkActive
-          #rla="routerLinkActive"
-          [activated]="rla.isActive">
-          <span matListItemTitle>{{ chat.description }}</span>
-        </a>
+        <div class="chat-item">
+          <a mat-list-item
+            class="chat-link"
+            [routerLink]="['/chat-memory', chat.id]"
+            routerLinkActive
+            #rla="routerLinkActive"
+            [activated]="rla.isActive">
+            <span matListItemTitle>{{ chat.description }}</span>
+          </a>
+          <button matIconButton
+            [matMenuTriggerFor]="chatMenu"
+            [attr.aria-label]="'Options for ' + chat.description">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #chatMenu="matMenu">
+            <button mat-menu-item (click)="renameChat(chat)">
+              <mat-icon>edit</mat-icon>
+              <span>Rename</span>
+            </button>
+            <button mat-menu-item (click)="deleteChat(chat)">
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+        </div>
       }
     </mat-nav-list>
   </aside>
 
   <app-chat-window
     class="chat-window"
-    title="Chat Memory"
+    [title]="title()"
     [messages]="messages()"
     [isLoading]="isLoading()"
     (send)="sendMessage($event)"
