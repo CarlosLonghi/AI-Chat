@@ -13,7 +13,7 @@
           <h2 class="welcome-title">{{ 'chat.welcome.title' | transloco }}</h2>
           <p class="welcome-hint">{{ 'chat.welcome.hint' | transloco }}</p>
           <div class="suggestions">
-            @for (key of suggestionKeys; track key) {
+            @for (key of suggestionKeys(); track key) {
               <button type="button" class="suggestion" (click)="sendSuggestion(key)">
                 <span class="suggestion-icon"><mat-icon>chat_bubble_outline</mat-icon></span>
                 {{ key | transloco }}
