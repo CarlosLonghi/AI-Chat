@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
+import { i18nTesting } from '../../../i18n/testing';
 import { RenameChatDialog } from './rename-chat-dialog';
 
 describe('RenameChatDialog', () => {
@@ -11,7 +12,7 @@ describe('RenameChatDialog', () => {
   beforeEach(async () => {
     close.mockClear();
     await TestBed.configureTestingModule({
-      imports: [RenameChatDialog],
+      imports: [RenameChatDialog, i18nTesting],
       providers: [
         { provide: MatDialogRef, useValue: { close } },
         { provide: MAT_DIALOG_DATA, useValue: 'Current' },
