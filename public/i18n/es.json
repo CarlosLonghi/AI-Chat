@@ -1,0 +1,70 @@
+{
+  "app": {
+    "home": "Inicio de ZeusAI"
+  },
+  "nav": {
+    "main": "Principal",
+    "simpleChat": "Chat Simple",
+    "chatMemory": "Chat con Memoria",
+    "simpleChatShort": "Simple",
+    "chatMemoryShort": "Memoria"
+  },
+  "toolbar": {
+    "language": "Idioma",
+    "switchToDark": "Cambiar al tema oscuro",
+    "switchToLight": "Cambiar al tema claro"
+  },
+  "chat": {
+    "message": "Mensaje",
+    "send": "Enviar",
+    "placeholder": "Haz una pregunta...",
+    "waiting": "Esperando respuesta...",
+    "typing": "El asistente está escribiendo",
+    "error": "Lo siento, algo salió mal. Inténtalo de nuevo.",
+    "simpleHint": "Cada mensaje es independiente",
+    "welcome": {
+      "title": "¡Hola! ¿En qué puedo ayudarte hoy?",
+      "hint": "Pregunta lo que quieras. Recordaré esta conversación."
+    },
+    "suggestions": {
+      "dinner": "Sugiere un menú de cenas para la semana",
+      "boss": "Ayúdame a escribir un mensaje a mi jefe",
+      "car": "Explica cómo funciona la financiación de un coche",
+      "trip": "Planea un viaje de fin de semana"
+    }
+  },
+  "memory": {
+    "newChat": "Nuevo chat",
+    "recent": "Recientes",
+    "conversations": "Conversaciones",
+    "empty": {
+      "title": "Aún no hay conversaciones",
+      "hint": "Empieza un nuevo chat y aparecerá aquí."
+    },
+    "options": "Opciones de {{ title }}",
+    "rename": "Renombrar",
+    "delete": "Eliminar",
+    "openChats": "Abrir conversaciones",
+    "closeChats": "Cerrar conversaciones",
+    "close": "Cerrar",
+    "deleted": "Conversación eliminada.",
+    "gone": "Esta conversación ya no existe.",
+    "renameFailed": "No se pudo renombrar la conversación.",
+    "deleteFailed": "No se pudo eliminar la conversación."
+  },
+  "dialogs": {
+    "rename": {
+      "title": "Renombrar conversación",
+      "label": "Título",
+      "required": "El título es obligatorio",
+      "cancel": "Cancelar",
+      "save": "Guardar"
+    },
+    "delete": {
+      "title": "¿Eliminar conversación?",
+      "body": "“{{ title }}” y todo su historial se eliminarán de forma permanente. Esta acción no se puede deshacer.",
+      "cancel": "Cancelar",
+      "confirm": "Eliminar"
+    }
+  }
+}

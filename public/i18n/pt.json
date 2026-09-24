@@ -1,0 +1,70 @@
+{
+  "app": {
+    "home": "Página inicial do ZeusAI"
+  },
+  "nav": {
+    "main": "Principal",
+    "simpleChat": "Chat Simples",
+    "chatMemory": "Chat com Memória",
+    "simpleChatShort": "Simples",
+    "chatMemoryShort": "Memória"
+  },
+  "toolbar": {
+    "language": "Idioma",
+    "switchToDark": "Mudar para o tema escuro",
+    "switchToLight": "Mudar para o tema claro"
+  },
+  "chat": {
+    "message": "Mensagem",
+    "send": "Enviar",
+    "placeholder": "Faça uma pergunta...",
+    "waiting": "Aguardando resposta...",
+    "typing": "O assistente está digitando",
+    "error": "Desculpe, algo deu errado. Tente novamente.",
+    "simpleHint": "Cada mensagem é independente",
+    "welcome": {
+      "title": "Olá! Como posso ajudar você hoje?",
+      "hint": "Pergunte o que quiser. Vou lembrar desta conversa."
+    },
+    "suggestions": {
+      "dinner": "Sugira um cardápio de jantares para a semana",
+      "boss": "Me ajude a escrever uma mensagem para o meu chefe",
+      "car": "Explique como funciona o financiamento de um carro",
+      "trip": "Planeje uma viagem de fim de semana"
+    }
+  },
+  "memory": {
+    "newChat": "Novo chat",
+    "recent": "Recentes",
+    "conversations": "Conversas",
+    "empty": {
+      "title": "Nenhuma conversa ainda",
+      "hint": "Comece um novo chat e ele aparecerá aqui."
+    },
+    "options": "Opções de {{ title }}",
+    "rename": "Renomear",
+    "delete": "Excluir",
+    "openChats": "Abrir conversas",
+    "closeChats": "Fechar conversas",
+    "close": "Fechar",
+    "deleted": "Conversa excluída.",
+    "gone": "Esta conversa não existe mais.",
+    "renameFailed": "Não foi possível renomear a conversa.",
+    "deleteFailed": "Não foi possível excluir a conversa."
+  },
+  "dialogs": {
+    "rename": {
+      "title": "Renomear conversa",
+      "label": "Título",
+      "required": "O título é obrigatório",
+      "cancel": "Cancelar",
+      "save": "Salvar"
+    },
+    "delete": {
+      "title": "Excluir conversa?",
+      "body": "“{{ title }}” e todo o seu histórico serão excluídos permanentemente. Esta ação não pode ser desfeita.",
+      "cancel": "Cancelar",
+      "confirm": "Excluir"
+    }
+  }
+}

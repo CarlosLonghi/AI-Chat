@@ -1,0 +1,23 @@
+<button
+  type="button"
+  class="language-button"
+  [matMenuTriggerFor]="languageMenu"
+  [attr.aria-label]="'toolbar.language' | transloco"
+>
+  <mat-icon>translate</mat-icon>
+  <span class="language-code">{{ languageService.current().toUpperCase() }}</span>
+</button>
+
+<mat-menu #languageMenu="matMenu">
+  @for (language of languageService.languages; track language.code) {
+    <button
+      mat-menu-item
+      role="menuitemradio"
+      [attr.aria-checked]="language.code === languageService.current()"
+      (click)="select(language.code)"
+    >
+      <mat-icon [style.visibility]="language.code === languageService.current() ? 'visible' : 'hidden'">check</mat-icon>
+      <span>{{ language.label }}</span>
+    </button>
+  }
+</mat-menu>

@@ -1,0 +1,47 @@
+:host {
+  display: inline-flex;
+}
+
+.language-button {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 44px;
+  padding: 0 14px 0 12px;
+  border: 1px solid var(--zeus-line);
+  border-radius: 22px;
+  background: var(--zeus-surface);
+  color: var(--zeus-text-2);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background: var(--zeus-surface-2);
+    color: var(--zeus-text);
+  }
+}
+
+@media (max-width: 768px) {
+  .language-button {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 50%;
+  }
+
+  .language-code {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .language-button {
+    transition: none;
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "app": {
+    "home": "ZeusAI home"
+  },
+  "nav": {
+    "main": "Main",
+    "simpleChat": "Simple Chat",
+    "chatMemory": "Chat Memory",
+    "simpleChatShort": "Simple",
+    "chatMemoryShort": "Memory"
+  },
+  "toolbar": {
+    "language": "Language",
+    "switchToDark": "Switch to dark theme",
+    "switchToLight": "Switch to light theme"
+  },
+  "chat": {
+    "message": "Message",
+    "send": "Send",
+    "placeholder": "Ask a question...",
+    "waiting": "Waiting for response...",
+    "typing": "Assistant is typing",
+    "error": "Sorry, something went wrong. Please try again.",
+    "simpleHint": "Each message is independent",
+    "welcome": {
+      "title": "Hello! How can I assist you today?",
+      "hint": "Ask anything. I will remember this conversation."
+    },
+    "suggestions": {
+      "dinner": "Suggest a weekly dinner menu",
+      "boss": "Help me write a message to my boss",
+      "car": "Explain how car financing works",
+      "trip": "Plan a weekend trip"
+    }
+  },
+  "memory": {
+    "newChat": "New chat",
+    "recent": "Recent",
+    "conversations": "Conversations",
+    "empty": {
+      "title": "No conversations yet",
+      "hint": "Start a new chat and it will show up here."
+    },
+    "options": "Options for {{ title }}",
+    "rename": "Rename",
+    "delete": "Delete",
+    "openChats": "Open chats",
+    "closeChats": "Close chats",
+    "close": "Close",
+    "deleted": "Chat deleted.",
+    "gone": "This chat no longer exists.",
+    "renameFailed": "Could not rename the chat.",
+    "deleteFailed": "Could not delete the chat."
+  },
+  "dialogs": {
+    "rename": {
+      "title": "Rename chat",
+      "label": "Title",
+      "required": "Title is required",
+      "cancel": "Cancel",
+      "save": "Save"
+    },
+    "delete": {
+      "title": "Delete chat?",
+      "body": "“{{ title }}” and its entire history will be permanently deleted. This cannot be undone.",
+      "cancel": "Cancel",
+      "confirm": "Delete"
+    }
+  }
+}
