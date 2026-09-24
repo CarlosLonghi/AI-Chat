@@ -1,17 +1,22 @@
-import { NgClass } from '@angular/common';
-import { afterRenderEffect, Component, ElementRef, input, output, signal, viewChild } from '@angular/core';
+import { afterRenderEffect, Component, computed, ElementRef, input, output, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { BoltIcon } from '../../shared/bolt-icon/bolt-icon';
 import { ChatMessage } from '../chat-models';
 import { MarkdownPipe } from '../markdown/markdown-pipe';
 
+const SUGGESTIONS = [
+  'Explain signals in Angular',
+  'Draft a REST API for a todo list',
+  'Summarize a long article',
+  'Help me debug a stack trace',
+];
+
 @Component({
   selector: 'app-chat-window',
-  imports: [MatCardModule, MatInputModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, FormsModule, NgClass, MarkdownPipe],
+  imports: [MatCardModule, MatButtonModule, MatIconModule, FormsModule, MarkdownPipe, BoltIcon],
   templateUrl: './chat-window.html',
   styleUrl: './chat-window.scss',
 })
@@ -27,6 +32,9 @@ export class ChatWindow {
 
   userInput = signal('');
 
+  suggestions = SUGGESTIONS;
+  isEmpty = computed(() => this.messages().length === 0 && !this.isLoading());
+
   constructor() {
     afterRenderEffect(() => {
       this.messages();
@@ -37,7 +45,14 @@ export class ChatWindow {
   }
 
   sendMessage() {
-    const message = this.userInput().trim();
+    this.submit(this.userInput().trim());
+  }
+
+  sendSuggestion(text: string) {
+    this.submit(text);
+  }
+
+  private submit(message: string) {
     if (message !== '' && !this.isLoading()) {
       this.send.emit(message);
       this.userInput.set('');

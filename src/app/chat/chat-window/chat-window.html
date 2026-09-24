@@ -1,50 +1,77 @@
-<mat-card class="chat-container">
-  <mat-card-header>
-    <mat-card-title>{{ title() }}</mat-card-title>
-  </mat-card-header>
-  <mat-card-content class="chat-content" #chatContent>
+<mat-card appearance="outlined" class="chat-container">
+  <header class="chat-header">
+    <ng-content select="[chatHeaderStart]" />
+    <h1 class="chat-title">{{ title() }}</h1>
+    <ng-content select="[chatHeaderEnd]" />
+  </header>
+
+  <div class="chat-content" #chatContent>
     <div class="messages">
-      @for (message of messages(); track $index) {
-        <div class="message">
-          <div class="message-bubble" [ngClass]="{'user': message.sender === 'user', 'bot': message.sender === 'bot'}">
-            @if (message.sender === 'bot') {
-              <div class="markdown" [innerHTML]="message.text | markdown"></div>
-            } @else {
-              {{ message.text }}
+      @if (isEmpty()) {
+        <section class="welcome">
+          <span class="zeus-mark welcome-mark"><app-bolt-icon [size]="36" /></span>
+          <h2 class="welcome-title">Hello! How can I assist you today?</h2>
+          <p class="welcome-hint">Ask anything. I will remember this conversation.</p>
+          <div class="suggestions">
+            @for (suggestion of suggestions; track suggestion) {
+              <button type="button" class="suggestion" (click)="sendSuggestion(suggestion)">
+                <span class="suggestion-icon"><mat-icon>chat_bubble_outline</mat-icon></span>
+                {{ suggestion }}
+              </button>
             }
           </div>
+        </section>
+      }
+
+      @for (message of messages(); track $index) {
+        <div class="message" [class.user]="message.sender === 'user'" [class.bot]="message.sender === 'bot'">
+          @if (message.sender === 'bot') {
+            <span class="zeus-mark avatar"><app-bolt-icon [size]="18" /></span>
+            <div class="message-bubble bot">
+              <div class="markdown" [innerHTML]="message.text | markdown"></div>
+            </div>
+          } @else {
+            <div class="message-bubble user">{{ message.text }}</div>
+          }
         </div>
       }
+
       @if (isLoading()) {
-        <div class="message">
-          <div class="message-bubble bot">
-            <mat-progress-spinner diameter="20" mode="indeterminate"></mat-progress-spinner>
+        <div class="message bot">
+          <span class="zeus-mark avatar"><app-bolt-icon [size]="18" /></span>
+          <div class="typing" role="status" aria-label="Assistant is typing">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
           </div>
         </div>
       }
     </div>
-  </mat-card-content>
+  </div>
 
   <div class="chat-input">
-    <mat-form-field class="full-width">
-      @if (isLoading()) {
-        <mat-label>Waiting for response...</mat-label>
-      } @else {
-        <mat-label>Ask a question...</mat-label>
-      }
-      <input matInput
+    <div class="chat-input-field">
+      <input
+        type="text"
+        aria-label="Message"
         [ngModel]="userInput()"
         (ngModelChange)="userInput.set($event)"
         (keyup.enter)="sendMessage()"
         maxlength="256"
-        placeholder="Type your question here..."
+        [placeholder]="isLoading() ? 'Waiting for response...' : 'Ask a question...'"
         [disabled]="isLoading()"
       />
-      <mat-hint align="end">{{userInput().length}} / 256</mat-hint>
-
-      <button matSuffix matIconButton aria-label="Send" (click)="sendMessage()" [disabled]="userInput().trim() === '' || isLoading()">
-        <mat-icon>send</mat-icon>
+      <span class="counter">{{ userInput().length }} / 256</span>
+      <button
+        type="button"
+        matIconButton
+        class="send"
+        aria-label="Send"
+        (click)="sendMessage()"
+        [disabled]="userInput().trim() === '' || isLoading()"
+      >
+        <mat-icon>arrow_upward</mat-icon>
       </button>
-    </mat-form-field>
+    </div>
   </div>
 </mat-card>

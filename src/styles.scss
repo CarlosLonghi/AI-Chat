@@ -1,9 +1,9 @@
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
+// ZeusAI theme: "Olympian ink". Warm ivory paper + deep ink, one electric blue for
+// actions and a single gold bolt as the signature. Every value below is a token, so the
+// whole look can be tuned here. Light/dark come from `light-dark()`: they follow the
+// system preference unless `data-theme` is set on <html> (see ThemeService).
 @use '@angular/material' as mat;
+@use 'app/chat/markdown/markdown';
 
 html {
   height: 100%;
@@ -12,40 +12,158 @@ html {
       color: (
         primary: mat.$azure-palette,
         tertiary: mat.$blue-palette,
+        theme-type: color-scheme,
       ),
-      typography: Roboto,
+      typography: (
+        plain-family: "'Instrument Sans', 'Segoe UI', sans-serif",
+        brand-family: "'Bricolage Grotesque', 'Segoe UI', sans-serif",
+      ),
       density: 0,
     )
   );
 }
 
-body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
+:root {
+  color-scheme: light dark;
+
+  // Typography
+  --zeus-font-display: 'Bricolage Grotesque', 'Segoe UI', sans-serif;
+  --zeus-font-body: 'Instrument Sans', 'Segoe UI', sans-serif;
+  --zeus-font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  // Color (light, dark)
+  --zeus-bg: light-dark(#f6f4ef, #0e1020);
+  --zeus-surface: light-dark(#ffffff, #161a2e);
+  --zeus-surface-2: light-dark(#f1eee6, #1e2340);
+  --zeus-line: light-dark(#e2ded3, #2a3050);
+  --zeus-text: light-dark(#16192b, #ecedf8);
+  --zeus-text-2: light-dark(#565b73, #a4aac6);
+  --zeus-primary: light-dark(#2a45e8, #4059f5);
+  --zeus-on-primary: #ffffff;
+  --zeus-tint: light-dark(#e4e8fd, #232b5c);
+  --zeus-bolt: #f2b01e;
+  --zeus-mark-bg: light-dark(#16192b, #1e2340);
+  --zeus-danger: light-dark(#b3261e, #ffb4ab);
+  --zeus-on-danger: light-dark(#ffffff, #601410);
+  --zeus-disabled: light-dark(#e2ded3, #2a3050);
+  --zeus-scrim: light-dark(rgba(22, 25, 43, 0.5), rgba(0, 0, 0, 0.6));
+  --zeus-shadow: light-dark(0 8px 28px rgba(22, 25, 43, 0.14), 0 8px 28px rgba(0, 0, 0, 0.5));
+
+  // Code blocks stay dark in both themes
+  --zeus-code-bg: light-dark(#1b1f36, #0b0d1a);
+  --zeus-code-bg-2: light-dark(#242945, #1a1f38);
+  --zeus-code-text: #e6e8f5;
+  --zeus-code-label: #b4bbda;
+  --zeus-code-inline: light-dark(#e7e3d8, #2a3050);
+
+  // Spacing scale
+  --zeus-space-1: 4px;
+  --zeus-space-2: 8px;
+  --zeus-space-3: 12px;
+  --zeus-space-4: 16px;
+  --zeus-space-5: 24px;
+  --zeus-space-6: 40px;
+
+  // Radii
+  --zeus-radius-item: 14px;
+  --zeus-radius-bubble: 20px;
+  --zeus-radius-panel: 24px;
+
+  // Height of the global toolbar
+  --zeus-toolbar-height: 64px;
+
+  // Angular Material (M3) system tokens mapped onto the ZeusAI tokens
+  --mat-sys-primary: var(--zeus-primary);
+  --mat-sys-on-primary: var(--zeus-on-primary);
+  --mat-sys-primary-container: var(--zeus-tint);
+  --mat-sys-on-primary-container: var(--zeus-text);
+  --mat-sys-secondary-container: var(--zeus-tint);
+  --mat-sys-on-secondary-container: var(--zeus-text);
+  --mat-sys-background: var(--zeus-bg);
+  --mat-sys-on-background: var(--zeus-text);
+  --mat-sys-surface: var(--zeus-bg);
+  --mat-sys-on-surface: var(--zeus-text);
+  --mat-sys-on-surface-variant: var(--zeus-text-2);
+  --mat-sys-surface-container-lowest: var(--zeus-surface);
+  --mat-sys-surface-container-low: var(--zeus-surface);
+  --mat-sys-surface-container: var(--zeus-surface);
+  --mat-sys-surface-container-high: var(--zeus-surface);
+  --mat-sys-surface-container-highest: var(--zeus-surface-2);
+  --mat-sys-outline: var(--zeus-text-2);
+  --mat-sys-outline-variant: var(--zeus-line);
+  --mat-sys-error: var(--zeus-danger);
+  --mat-sys-on-error: var(--zeus-on-danger);
+  --mat-sys-inverse-surface: #262b47;
+  --mat-sys-inverse-on-surface: #f1efe8;
+  --mat-sys-inverse-primary: var(--zeus-bolt);
+
+  // Component overrides
+  --mat-toolbar-container-background-color: var(--zeus-bg);
+  --mat-toolbar-container-text-color: var(--zeus-text);
+  --mat-toolbar-standard-height: var(--zeus-toolbar-height);
+  --mat-toolbar-mobile-height: var(--zeus-toolbar-height);
+
+  --mat-button-filled-container-height: 44px;
+  --mat-button-filled-container-shape: 22px;
+  --mat-button-text-container-height: 44px;
+  --mat-button-text-container-shape: 22px;
+
+  --mat-dialog-container-color: var(--zeus-surface);
+  --mat-dialog-container-shape: 28px;
+  --mat-dialog-subhead-font: var(--zeus-font-display);
+  --mat-dialog-subhead-size: 22px;
+  --mat-dialog-subhead-weight: 600;
+  --mat-dialog-supporting-text-color: var(--zeus-text-2);
+
+  --mat-menu-container-shape: 14px;
+  --mat-menu-container-color: var(--zeus-surface);
+
+  --mat-snack-bar-container-shape: 14px;
+  --mat-snack-bar-button-color: var(--zeus-bolt);
+}
+
+:root[data-theme='light'] {
   color-scheme: light;
+}
 
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
 
-  // Reset the user agent margin.
+body {
+  background-color: var(--zeus-bg);
+  color: var(--zeus-text);
+  font-family: var(--zeus-font-body);
+  font-size: 15px;
   margin: 0;
   height: 100%;
   scroll-behavior: smooth;
 }
-/* You can add global styles to this file, and also import other style files */
 
-// Override toolbar styles using the `mat.toolbar-overrides` mixin. This mixin
-// accepts a map of CSS properties and values that will be applied to the
-// toolbar component. Learn more about overriding component styles at
-// https://material.angular.dev/guide/theming#overriding-component-styles
-:root {
-  @include mat.toolbar-overrides((
-    container-background-color: #d7e3ff,
-    container-text-color: #005cdb,
-  ));
+// Visible keyboard focus everywhere (WCAG AA)
+:focus-visible {
+  outline: 2px solid var(--zeus-primary);
+  outline-offset: 2px;
+}
+
+// Bolt logo mark (toolbar, assistant avatar, welcome screen). Size via --mark-size.
+.zeus-mark {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--mark-size, 36px);
+  height: var(--mark-size, 36px);
+  border-radius: 28%;
+  background: var(--zeus-mark-bg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  body {
+    scroll-behavior: auto;
+  }
 }

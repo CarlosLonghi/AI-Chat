@@ -1,8 +1,11 @@
 <div class="chat-page">
   <app-chat-window
+    class="chat-window"
     title="Simple Chat"
     [messages]="messages()"
     [isLoading]="isLoading()"
     (send)="sendMessage($event)"
-  />
+  >
+    <span chatHeaderEnd class="chat-hint">Each message is independent</span>
+  </app-chat-window>
 </div>

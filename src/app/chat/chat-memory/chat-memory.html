@@ -1,46 +1,94 @@
-<div class="chat-page">
-  <aside class="chat-list">
-    <button matButton="filled" class="new-chat" routerLink="/chat-memory">
-      <mat-icon>add</mat-icon>
-      New chat
-    </button>
-
-    <mat-nav-list>
-      @for (chat of chats(); track chat.id) {
-        <div class="chat-item">
-          <a mat-list-item
-            class="chat-link"
-            [routerLink]="['/chat-memory', chat.id]"
-            routerLinkActive
-            #rla="routerLinkActive"
-            [activated]="rla.isActive">
-            <span matListItemTitle>{{ chat.description }}</span>
-          </a>
-          <button matIconButton
-            [matMenuTriggerFor]="chatMenu"
-            [attr.aria-label]="'Options for ' + chat.description">
-            <mat-icon>more_vert</mat-icon>
+<mat-sidenav-container class="chat-page">
+  <mat-sidenav
+    class="chat-sidenav"
+    [class.mobile]="isMobile()"
+    [mode]="isMobile() ? 'over' : 'side'"
+    [opened]="!isMobile() || drawerOpen()"
+    (closedStart)="drawerOpen.set(false)"
+    aria-label="Conversations"
+  >
+    <div class="chat-list">
+      @if (isMobile()) {
+        <div class="drawer-header">
+          <span class="drawer-brand">
+            <span class="zeus-mark logo"><app-bolt-icon [size]="20" /></span>
+            <span class="drawer-brand-name">ZeusAI</span>
+          </span>
+          <button type="button" matIconButton aria-label="Close chats" (click)="closeDrawer()">
+            <mat-icon>close</mat-icon>
           </button>
-          <mat-menu #chatMenu="matMenu">
-            <button mat-menu-item (click)="renameChat(chat)">
-              <mat-icon>edit</mat-icon>
-              <span>Rename</span>
-            </button>
-            <button mat-menu-item (click)="deleteChat(chat)">
-              <mat-icon>delete</mat-icon>
-              <span>Delete</span>
-            </button>
-          </mat-menu>
         </div>
       }
-    </mat-nav-list>
-  </aside>
 
-  <app-chat-window
-    class="chat-window"
-    [title]="title()"
-    [messages]="messages()"
-    [isLoading]="isLoading()"
-    (send)="sendMessage($event)"
-  />
-</div>
+      <a matButton="filled" class="new-chat" routerLink="/chat-memory" (click)="closeDrawer()">
+        <mat-icon>add</mat-icon>
+        New chat
+      </a>
+
+      @if (chatsLoaded() && chats().length === 0) {
+        <div class="empty-list">
+          <span class="empty-icon"><mat-icon>chat_bubble_outline</mat-icon></span>
+          <span class="empty-title">No conversations yet</span>
+          <span class="empty-hint">Start a new chat and it will show up here.</span>
+        </div>
+      } @else if (chats().length > 0) {
+        <h2 class="list-label">Recent</h2>
+        <nav class="chat-nav" aria-label="Conversations">
+          @for (chat of chats(); track chat.id) {
+            <div class="chat-item" routerLinkActive="active" #rla="routerLinkActive">
+              <a
+                class="chat-link"
+                [routerLink]="['/chat-memory', chat.id]"
+                [attr.aria-current]="rla.isActive ? 'page' : null"
+                (click)="closeDrawer()"
+              >
+                <span class="active-dot"></span>
+                <span class="chat-title">{{ chat.description }}</span>
+              </a>
+              <button
+                type="button"
+                matIconButton
+                class="chat-options"
+                [matMenuTriggerFor]="chatMenu"
+                [attr.aria-label]="'Options for ' + chat.description"
+              >
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #chatMenu="matMenu">
+                <button mat-menu-item (click)="renameChat(chat)">
+                  <mat-icon>edit</mat-icon>
+                  <span>Rename</span>
+                </button>
+                <button mat-menu-item class="danger" (click)="deleteChat(chat)">
+                  <mat-icon>delete</mat-icon>
+                  <span>Delete</span>
+                </button>
+              </mat-menu>
+            </div>
+          }
+        </nav>
+      }
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="chat-main">
+    <app-chat-window
+      class="chat-window"
+      [title]="title()"
+      [messages]="messages()"
+      [isLoading]="isLoading()"
+      (send)="sendMessage($event)"
+    >
+      <button
+        chatHeaderStart
+        type="button"
+        matIconButton
+        class="menu-button"
+        aria-label="Open chats"
+        (click)="drawerOpen.set(true)"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+    </app-chat-window>
+  </mat-sidenav-content>
+</mat-sidenav-container>

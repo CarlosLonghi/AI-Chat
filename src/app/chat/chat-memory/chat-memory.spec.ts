@@ -39,7 +39,7 @@ describe('ChatMemory', () => {
     http.expectOne('/api/v1/chat/memory/new').flush({ chatId: 'abc', description: 'Título', response: 'olá' });
 
     expect(component.chats()).toEqual([{ id: 'abc', description: 'Título' }]);
-    expect(component.messages().map(m => m.text)).toEqual(['Hello! How can I assist you today?', 'oi', 'olá']);
+    expect(component.messages().map(m => m.text)).toEqual(['oi', 'olá']);
     expect(component.isLoading()).toBe(false);
     expect(TestBed.inject(Router).navigate).toHaveBeenCalledWith(['/chat-memory', 'abc']);
   });

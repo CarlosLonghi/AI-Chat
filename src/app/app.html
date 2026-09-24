@@ -1,8 +1,24 @@
-<mat-toolbar>
-  <span class="title">{{ title }}</span>
+<mat-toolbar class="topbar">
+  <a class="brand" routerLink="/" aria-label="ZeusAI home">
+    <span class="zeus-mark logo"><app-bolt-icon [size]="20" /></span>
+    <span class="brand-name">{{ title }}</span>
+  </a>
+
+  <nav class="nav" aria-label="Main">
+    <a routerLink="/simple-chat" routerLinkActive="active" ariaCurrentWhenActive="page">Simple Chat</a>
+    <a routerLink="/chat-memory" routerLinkActive="active" ariaCurrentWhenActive="page">Chat Memory</a>
+  </nav>
+
   <span class="spacer"></span>
-  <button matButton aria-label="Simple Chat" routerLink="/simple-chat">Simple Chat</button>
-  <button matButton aria-label="Chat Memory" routerLink="/chat-memory">Chat Memory</button>
+
+  <button
+    type="button"
+    class="theme-toggle"
+    (click)="themeService.toggle()"
+    [attr.aria-label]="themeService.theme() === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'"
+  >
+    <mat-icon>{{ themeService.theme() === 'dark' ? 'light_mode' : 'dark_mode' }}</mat-icon>
+  </button>
 </mat-toolbar>
 
 <router-outlet></router-outlet>
