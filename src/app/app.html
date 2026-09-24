@@ -1,21 +1,29 @@
 <mat-toolbar class="topbar">
-  <a class="brand" routerLink="/" aria-label="ZeusAI home">
+  <a class="brand" routerLink="/" [attr.aria-label]="'app.home' | transloco">
     <span class="zeus-mark logo"><app-bolt-icon [size]="20" /></span>
     <span class="brand-name">{{ title }}</span>
   </a>
 
-  <nav class="nav" aria-label="Main">
-    <a routerLink="/simple-chat" routerLinkActive="active" ariaCurrentWhenActive="page">Simple Chat</a>
-    <a routerLink="/chat-memory" routerLinkActive="active" ariaCurrentWhenActive="page">Chat Memory</a>
+  <nav class="nav" [attr.aria-label]="'nav.main' | transloco">
+    <a routerLink="/simple-chat" routerLinkActive="active" ariaCurrentWhenActive="page">
+      <span class="label-full">{{ 'nav.simpleChat' | transloco }}</span>
+      <span class="label-short">{{ 'nav.simpleChatShort' | transloco }}</span>
+    </a>
+    <a routerLink="/chat-memory" routerLinkActive="active" ariaCurrentWhenActive="page">
+      <span class="label-full">{{ 'nav.chatMemory' | transloco }}</span>
+      <span class="label-short">{{ 'nav.chatMemoryShort' | transloco }}</span>
+    </a>
   </nav>
 
   <span class="spacer"></span>
+
+  <app-language-switcher />
 
   <button
     type="button"
     class="theme-toggle"
     (click)="themeService.toggle()"
-    [attr.aria-label]="themeService.theme() === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'"
+    [attr.aria-label]="(themeService.theme() === 'dark' ? 'toolbar.switchToLight' : 'toolbar.switchToDark') | transloco"
   >
     <mat-icon>{{ themeService.theme() === 'dark' ? 'light_mode' : 'dark_mode' }}</mat-icon>
   </button>
