@@ -1,4 +1,32 @@
+:host {
+  display: block;
+}
+
 .chat-page {
-  height: 80vh;
-  margin: 32px;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  height: calc(100dvh - var(--zeus-toolbar-height));
+  padding: 20px;
+}
+
+.chat-window {
+  width: 100%;
+  max-width: 900px;
+}
+
+.chat-hint {
+  flex: none;
+  color: var(--zeus-text-2);
+  font-size: 13px;
+}
+
+@media (max-width: 768px) {
+  .chat-page {
+    padding: 0;
+  }
+
+  .chat-hint {
+    display: none;
+  }
 }
