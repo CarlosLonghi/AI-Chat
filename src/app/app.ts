@@ -1,14 +1,18 @@
-import { Component } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+import { Component, inject } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { BoltIcon } from './shared/bolt-icon/bolt-icon';
+import { ThemeService } from './theme/theme-service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, MatToolbarModule, MatButtonModule],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, MatIconModule, MatToolbarModule, BoltIcon],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {
   readonly title = 'ZeusAI';
+
+  themeService = inject(ThemeService);
 }

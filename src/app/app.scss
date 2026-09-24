@@ -1,4 +1,105 @@
-.title {
-  margin-right: 10px;
-  font-size: 1.125em;
+:host {
+  display: block;
+}
+
+.topbar {
+  box-sizing: border-box;
+  gap: 28px;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--zeus-line);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--zeus-text);
+  text-decoration: none;
+}
+
+.logo {
+  --mark-size: 36px;
+}
+
+.brand-name {
+  font-family: var(--zeus-font-display);
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.nav {
+  display: flex;
+  gap: 4px;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 18px;
+    border-radius: 20px;
+    color: var(--zeus-text-2);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
+
+    &:hover {
+      background: var(--zeus-surface-2);
+      color: var(--zeus-text);
+    }
+
+    &.active {
+      background: var(--zeus-tint);
+      color: var(--zeus-text);
+      font-weight: 600;
+    }
+  }
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--zeus-line);
+  border-radius: 50%;
+  background: var(--zeus-surface);
+  color: var(--zeus-text-2);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background: var(--zeus-surface-2);
+    color: var(--zeus-text);
+  }
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    gap: 8px;
+    padding: 0 12px;
+  }
+
+  .brand-name {
+    display: none;
+  }
+
+  .nav a {
+    padding: 0 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav a,
+  .theme-toggle {
+    transition: none;
+  }
 }
