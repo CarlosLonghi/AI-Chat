@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatInputModule } from '@angular/material/input';
 
 export const MAX_TITLE_LENGTH = 30;
 
@@ -12,7 +11,7 @@ function notBlank(control: AbstractControl<string>): ValidationErrors | null {
 
 @Component({
   selector: 'app-rename-chat-dialog',
-  imports: [ReactiveFormsModule, MatButtonModule, MatDialogModule, MatInputModule],
+  imports: [ReactiveFormsModule, MatButtonModule, MatDialogModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './rename-chat-dialog.html',
   styleUrl: './rename-chat-dialog.scss',
