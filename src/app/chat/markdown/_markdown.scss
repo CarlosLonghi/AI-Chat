@@ -1,0 +1,109 @@
+// Styles for rendered markdown in assistant messages (see MarkdownPipe). Global, because the
+// HTML comes from [innerHTML] and is not tagged by view encapsulation.
+.markdown {
+  overflow-wrap: anywhere;
+
+  > :first-child { margin-top: 0; }
+  > :last-child { margin-bottom: 0; }
+
+  p, ul, ol, blockquote { margin: 0.5em 0; }
+  ul, ol { padding-left: 1.5em; }
+  li { margin-bottom: 4px; padding-left: 4px; }
+  h1, h2, h3, h4 {
+    margin: 0.75em 0 0.25em;
+    font-family: var(--zeus-font-display);
+    line-height: 1.25;
+  }
+  h1 { font-size: 1.4em; }
+  h2 { font-size: 1.25em; }
+  h3, h4 { font-size: 1.1em; }
+
+  code {
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: var(--zeus-code-inline);
+    font-family: var(--zeus-font-mono);
+    font-size: 13px;
+  }
+
+  pre {
+    margin: 0.5em 0 0.9em;
+    overflow-x: auto;
+    padding: 14px;
+    border-radius: 14px;
+    background: var(--zeus-code-bg);
+    color: var(--zeus-code-text);
+    font-family: var(--zeus-font-mono);
+    font-size: 13px;
+    line-height: 1.65;
+
+    code {
+      padding: 0;
+      background: none;
+      color: inherit;
+      font-size: inherit;
+    }
+  }
+
+  // Fenced blocks with a language get a header strip (see MarkdownPipe)
+  .code-block {
+    margin: 0.5em 0 0.9em;
+    overflow: hidden;
+    border-radius: 14px;
+    background: var(--zeus-code-bg);
+
+    pre {
+      margin: 0;
+      border-radius: 0;
+    }
+  }
+
+  .code-lang {
+    padding: 8px 14px;
+    background: var(--zeus-code-bg-2);
+    color: var(--zeus-code-label);
+    font-family: var(--zeus-font-mono);
+    font-size: 12px;
+  }
+
+  blockquote {
+    padding-left: 0.9em;
+    border-left: 3px solid var(--zeus-primary);
+    color: var(--zeus-text-2);
+  }
+
+  table {
+    display: block;
+    width: 100%;
+    margin: 0.5em 0 0.9em;
+    overflow-x: auto;
+    border: 1px solid var(--zeus-line);
+    border-collapse: separate;
+    border-radius: 12px;
+    border-spacing: 0;
+    font-size: 14px;
+  }
+
+  th, td {
+    padding: 9px 14px;
+    overflow-wrap: normal;
+    text-align: left;
+  }
+
+  th {
+    background: var(--zeus-tint);
+    color: var(--zeus-text-2);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  td {
+    border-top: 1px solid var(--zeus-line);
+  }
+
+  a {
+    color: var(--zeus-primary);
+  }
+}
