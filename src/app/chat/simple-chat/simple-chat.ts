@@ -3,6 +3,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { ChatMessage } from '../chat-models';
 import { ChatService } from '../chat-service';
 import { ChatWindow } from '../chat-window/chat-window';
+import { QUICK_SUGGESTION_KEYS } from './quick-suggestions';
 
 @Component({
   selector: 'app-simple-chat',
@@ -18,8 +19,11 @@ export class SimpleChat {
 
   messages = signal<ChatMessage[]>([]);
 
+  suggestions = QUICK_SUGGESTION_KEYS;
+
+  // Each question stands alone: sending a new one replaces the previous question and answer.
   sendMessage(text: string) {
-    this.updateMessages({ text, sender: 'user' });
+    this.messages.set([{ text, sender: 'user' }]);
     this.isLoading.set(true);
     this.chatService.simpleChat(text)
     .subscribe({

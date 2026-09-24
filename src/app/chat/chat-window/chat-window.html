@@ -89,7 +89,7 @@
         (ngModelChange)="userInput.set($event)"
         (keyup.enter)="sendMessage()"
         maxlength="256"
-        [placeholder]="(isLoading() ? 'chat.waiting' : 'chat.placeholder') | transloco"
+        [placeholder]="(isLoading() ? 'chat.waiting' : placeholder()) | transloco"
         [disabled]="isLoading()"
       />
       <span class="counter">{{ userInput().length }} / 256</span>

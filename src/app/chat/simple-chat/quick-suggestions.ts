@@ -1,0 +1,23 @@
+/** Self-contained questions that make sense without any conversation history. */
+export const QUICK_SUGGESTION_KEYS = [
+  'chat.quickSuggestions.capital',
+  'chat.quickSuggestions.cups',
+  'chat.quickSuggestions.synonym',
+  'chat.quickSuggestions.define',
+  'chat.quickSuggestions.translate',
+  'chat.quickSuggestions.grammar',
+  'chat.quickSuggestions.percent',
+  'chat.quickSuggestions.convert',
+  'chat.quickSuggestions.egg',
+  'chat.quickSuggestions.timezone',
+  'chat.quickSuggestions.sky',
+  'chat.quickSuggestions.war',
+  'chat.quickSuggestions.planets',
+  'chat.quickSuggestions.python',
+  'chat.quickSuggestions.regex',
+  'chat.quickSuggestions.screenshot',
+  'chat.quickSuggestions.joke',
+  'chat.quickSuggestions.petname',
+  'chat.quickSuggestions.acronym',
+  'chat.quickSuggestions.stain',
+];

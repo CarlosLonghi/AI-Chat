@@ -21,6 +21,7 @@
     "send": "Send",
     "placeholder": "Ask a question...",
     "waiting": "Waiting for response...",
+    "placeholderNew": "Ask a new question...",
     "typing": "Assistant is typing",
     "error": "Sorry, something went wrong. Please try again.",
     "simpleHint": "Each message is independent",
@@ -73,6 +74,28 @@
       "pet": "How do I train my dog to follow basic commands?",
       "movie": "Recommend movies and series to watch this weekend",
       "book": "Suggest books for building good habits"
+    },
+    "quickSuggestions": {
+      "capital": "What is the capital of Australia?",
+      "cups": "How many tablespoons are in a cup?",
+      "synonym": "Give me synonyms for the word “happy”",
+      "define": "What does “serendipity” mean?",
+      "translate": "How do you say “good morning” in Japanese?",
+      "grammar": "What is the difference between “affect” and “effect”?",
+      "percent": "What is 15% of 240?",
+      "convert": "How many miles is 10 kilometers?",
+      "egg": "How long does it take to boil an egg?",
+      "timezone": "What time is it in Tokyo when it is noon in São Paulo?",
+      "sky": "Why is the sky blue?",
+      "war": "In what year did World War II end?",
+      "planets": "How many planets are in the solar system?",
+      "python": "How do I reverse a string in Python?",
+      "regex": "What is a regex to validate an email address?",
+      "screenshot": "What is the keyboard shortcut to take a screenshot on Windows?",
+      "joke": "Tell me a short joke",
+      "petname": "Suggest 5 names for a golden retriever puppy",
+      "acronym": "What does the acronym API stand for?",
+      "stain": "How do I remove a wine stain from a shirt?"
     }
   },
   "memory": {

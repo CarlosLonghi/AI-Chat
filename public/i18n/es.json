@@ -21,6 +21,7 @@
     "send": "Enviar",
     "placeholder": "Haz una pregunta...",
     "waiting": "Esperando respuesta...",
+    "placeholderNew": "Haz una nueva pregunta...",
     "typing": "El asistente está escribiendo",
     "error": "Lo siento, algo salió mal. Inténtalo de nuevo.",
     "simpleHint": "Cada mensaje es independiente",
@@ -73,6 +74,28 @@
       "pet": "¿Cómo entrenar a mi perro para que obedezca órdenes básicas?",
       "movie": "Recomienda películas y series para ver este fin de semana",
       "book": "Sugiere libros para desarrollar buenos hábitos"
+    },
+    "quickSuggestions": {
+      "capital": "¿Cuál es la capital de Australia?",
+      "cups": "¿Cuántas cucharadas hay en una taza?",
+      "synonym": "Dame sinónimos de la palabra “feliz”",
+      "define": "¿Qué significa “serendipia”?",
+      "translate": "¿Cómo se dice “buenos días” en japonés?",
+      "grammar": "¿Cuál es la diferencia entre “a ver” y “haber”?",
+      "percent": "¿Cuánto es el 15% de 240?",
+      "convert": "¿Cuántas millas son 10 kilómetros?",
+      "egg": "¿Cuánto tiempo tarda en cocerse un huevo?",
+      "timezone": "¿Qué hora es en Tokio cuando es mediodía en São Paulo?",
+      "sky": "¿Por qué el cielo es azul?",
+      "war": "¿En qué año terminó la Segunda Guerra Mundial?",
+      "planets": "¿Cuántos planetas hay en el sistema solar?",
+      "python": "¿Cómo invierto una cadena en Python?",
+      "regex": "¿Cuál es una regex para validar un correo electrónico?",
+      "screenshot": "¿Cuál es el atajo para hacer una captura de pantalla en Windows?",
+      "joke": "Cuéntame un chiste corto",
+      "petname": "Sugiere 5 nombres para un cachorro de golden retriever",
+      "acronym": "¿Qué significa la sigla API?",
+      "stain": "¿Cómo quito una mancha de vino de una camisa?"
     }
   },
   "memory": {

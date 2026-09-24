@@ -5,6 +5,8 @@
     [messages]="messages()"
     [isLoading]="isLoading()"
     welcomeHint="chat.welcome.hintSimple"
+    [suggestions]="suggestions"
+    [placeholder]="messages().length > 0 ? 'chat.placeholderNew' : 'chat.placeholder'"
     (send)="sendMessage($event)"
   >
     <span chatHeaderEnd class="chat-hint">{{ 'chat.simpleHint' | transloco }}</span>

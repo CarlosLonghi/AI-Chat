@@ -79,6 +79,10 @@ export class ChatWindow {
   isLoading = input(false);
   /** Translation key for the line under the welcome title. */
   welcomeHint = input('chat.welcome.hint');
+  /** Translation key for the input placeholder while idle. */
+  placeholder = input('chat.placeholder');
+  /** Translation keys the welcome screen picks its suggestions from. */
+  suggestions = input<readonly string[]>(SUGGESTION_KEYS);
 
   send = output<string>();
 
@@ -96,7 +100,7 @@ export class ChatWindow {
 
   isEmpty = computed(() => this.messages().length === 0 && !this.isLoading());
   // Re-picked every time the welcome screen shows up again, e.g. after starting a new chat.
-  suggestionKeys = computed(() => (this.isEmpty() ? pickRandom(SUGGESTION_KEYS, SUGGESTIONS_SHOWN) : []));
+  suggestionKeys = computed(() => (this.isEmpty() ? pickRandom(this.suggestions(), SUGGESTIONS_SHOWN) : []));
 
   constructor() {
     afterRenderEffect(() => {
