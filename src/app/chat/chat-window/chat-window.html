@@ -27,8 +27,39 @@
         <div class="message" [class.user]="message.sender === 'user'" [class.bot]="message.sender === 'bot'">
           @if (message.sender === 'bot') {
             <span class="zeus-mark avatar"><app-bolt-icon [size]="18" /></span>
-            <div class="message-bubble bot">
-              <div class="markdown" [innerHTML]="(message.i18nKey ? (message.i18nKey | transloco) : message.text) | markdown"></div>
+            <div class="bot-content">
+              <div class="message-bubble bot">
+                <div class="markdown" [innerHTML]="(message.i18nKey ? (message.i18nKey | transloco) : message.text) | markdown"></div>
+              </div>
+              @if (!message.i18nKey || $index === retryIndex()) {
+                <div class="message-actions">
+                  @if (!message.i18nKey) {
+                    <button
+                      type="button"
+                      matIconButton
+                      class="action copy"
+                      [attr.aria-label]="(copiedIndex() === $index ? 'chat.copied' : 'chat.copy') | transloco"
+                      [attr.title]="(copiedIndex() === $index ? 'chat.copied' : 'chat.copy') | transloco"
+                      (click)="copy($index)"
+                    >
+                      <mat-icon>{{ copiedIndex() === $index ? 'check' : 'content_copy' }}</mat-icon>
+                    </button>
+                  }
+                  @if ($index === retryIndex()) {
+                    <button
+                      type="button"
+                      matIconButton
+                      class="action retry"
+                      [attr.aria-label]="'chat.retry' | transloco"
+                      [attr.title]="'chat.retry' | transloco"
+                      [disabled]="isLoading()"
+                      (click)="retry($index)"
+                    >
+                      <mat-icon>refresh</mat-icon>
+                    </button>
+                  }
+                </div>
+              }
             </div>
           } @else {
             <div class="message-bubble user">{{ message.text }}</div>

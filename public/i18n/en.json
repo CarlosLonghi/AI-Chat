@@ -22,6 +22,9 @@
     "typing": "Assistant is typing",
     "error": "Sorry, something went wrong. Please try again.",
     "simpleHint": "Each message is independent",
+    "copy": "Copy response",
+    "copied": "Copied",
+    "retry": "Try again",
     "welcome": {
       "title": "Hello! How can I assist you today?",
       "hint": "Ask anything. I will remember this conversation."

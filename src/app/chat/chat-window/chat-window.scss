@@ -104,6 +104,41 @@
   }
 }
 
+.bot-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.message-actions {
+  display: flex;
+  gap: 2px;
+  margin: 2px 0 0 -6px;
+}
+
+.action {
+  --mat-icon-button-icon-color: var(--zeus-text-2);
+  // Material derives the button size and padding from these tokens (padding = (layer - icon) / 2)
+  // and sizes the line box from the icon size, so both must be set for the icon to stay centered.
+  --mat-icon-button-state-layer-size: 32px;
+  --mat-icon-button-icon-size: 16px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  mat-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+  }
+
+  &:hover:not(:disabled) {
+    --mat-icon-button-icon-color: var(--zeus-text);
+  }
+}
+
 // ---- Typing indicator
 .typing {
   display: flex;

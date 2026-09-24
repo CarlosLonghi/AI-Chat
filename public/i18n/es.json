@@ -22,6 +22,9 @@
     "typing": "El asistente está escribiendo",
     "error": "Lo siento, algo salió mal. Inténtalo de nuevo.",
     "simpleHint": "Cada mensaje es independiente",
+    "copy": "Copiar respuesta",
+    "copied": "Copiado",
+    "retry": "Reintentar",
     "welcome": {
       "title": "¡Hola! ¿En qué puedo ayudarte hoy?",
       "hint": "Pregunta lo que quieras. Recordaré esta conversación."

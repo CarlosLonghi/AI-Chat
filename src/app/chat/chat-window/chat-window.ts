@@ -1,3 +1,4 @@
+import { Clipboard } from '@angular/cdk/clipboard';
 import { afterRenderEffect, Component, computed, ElementRef, inject, input, output, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -70,6 +71,7 @@ function pickRandom<T>(items: readonly T[], count: number): T[] {
 export class ChatWindow {
 
   private transloco = inject(TranslocoService);
+  private clipboard = inject(Clipboard);
   private chatContent = viewChild.required<ElementRef<HTMLDivElement>>('chatContent');
 
   title = input.required<string>();
@@ -79,6 +81,16 @@ export class ChatWindow {
   send = output<string>();
 
   userInput = signal('');
+
+  copiedIndex = signal<number | null>(null);
+  private copiedTimer: ReturnType<typeof setTimeout> | undefined;
+
+  // Only the last reply can be retried, and only when there is a user message to resend.
+  retryIndex = computed(() => {
+    const messages = this.messages();
+    const last = messages.length - 1;
+    return last > 0 && messages[last].sender === 'bot' && messages.slice(0, last).some(m => m.sender === 'user') ? last : -1;
+  });
 
   isEmpty = computed(() => this.messages().length === 0 && !this.isLoading());
   // Re-picked every time the welcome screen shows up again, e.g. after starting a new chat.
@@ -99,6 +111,20 @@ export class ChatWindow {
 
   sendSuggestion(key: string) {
     this.submit(this.transloco.translate(key));
+  }
+
+  copy(index: number) {
+    if (!this.clipboard.copy(this.messages()[index].text)) return;
+    this.copiedIndex.set(index);
+    clearTimeout(this.copiedTimer);
+    this.copiedTimer = setTimeout(() => this.copiedIndex.set(null), 2000);
+  }
+
+  retry(index: number) {
+    const userMessage = this.messages().slice(0, index).filter(m => m.sender === 'user').at(-1);
+    if (userMessage) {
+      this.submit(userMessage.text);
+    }
   }
 
   private submit(message: string) {
