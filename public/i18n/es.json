@@ -4,10 +4,12 @@
   },
   "nav": {
     "main": "Principal",
-    "simpleChat": "Chat Simple",
-    "chatMemory": "Chat con Memoria",
-    "simpleChatShort": "Simple",
-    "chatMemoryShort": "Memoria"
+    "simpleChat": "Pregunta rápida",
+    "chatMemory": "Conversaciones",
+    "simpleChatShort": "Rápida",
+    "chatMemoryShort": "Chats",
+    "simpleChatHint": "Cada pregunta es independiente, sin historial",
+    "chatMemoryHint": "Tus conversaciones se guardan y la IA recuerda el contexto"
   },
   "toolbar": {
     "language": "Idioma",
@@ -27,7 +29,8 @@
     "retry": "Reintentar",
     "welcome": {
       "title": "¡Hola! ¿En qué puedo ayudarte hoy?",
-      "hint": "Pregunta lo que quieras. Recordaré esta conversación."
+      "hint": "Pregunta lo que quieras. Recordaré esta conversación.",
+      "hintSimple": "Cada mensaje es independiente: no guardo historial ni contexto."
     },
     "suggestions": {
       "dinner": "Sugiere un menú de cenas para la semana",

@@ -16,9 +16,7 @@ export class SimpleChat {
 
   isLoading = signal(false);
 
-  messages = signal<ChatMessage[]>([
-    { text: 'Hello! How can I assist you today?', sender: 'bot', i18nKey: 'chat.welcome.title' }
-  ]);
+  messages = signal<ChatMessage[]>([]);
 
   sendMessage(text: string) {
     this.updateMessages({ text, sender: 'user' });

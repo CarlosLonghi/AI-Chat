@@ -11,7 +11,7 @@
         <section class="welcome">
           <span class="zeus-mark welcome-mark"><app-bolt-icon [size]="36" /></span>
           <h2 class="welcome-title">{{ 'chat.welcome.title' | transloco }}</h2>
-          <p class="welcome-hint">{{ 'chat.welcome.hint' | transloco }}</p>
+          <p class="welcome-hint">{{ welcomeHint() | transloco }}</p>
           <div class="suggestions">
             @for (key of suggestionKeys(); track key) {
               <button type="button" class="suggestion" (click)="sendSuggestion(key)">

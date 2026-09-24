@@ -4,6 +4,7 @@
     [title]="'nav.simpleChat' | transloco"
     [messages]="messages()"
     [isLoading]="isLoading()"
+    welcomeHint="chat.welcome.hintSimple"
     (send)="sendMessage($event)"
   >
     <span chatHeaderEnd class="chat-hint">{{ 'chat.simpleHint' | transloco }}</span>

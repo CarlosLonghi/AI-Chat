@@ -2,7 +2,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { i18nTesting } from '../../i18n/testing';
+import { enTranslations, i18nTesting } from '../../i18n/testing';
 import { SimpleChat } from './simple-chat';
 
 describe('SimpleChat', () => {
@@ -22,5 +22,13 @@ describe('SimpleChat', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should open on the welcome screen saying each message is independent', () => {
+    const el = fixture.nativeElement as HTMLElement;
+
+    expect(el.querySelector('.welcome')).not.toBeNull();
+    expect(el.querySelector('.welcome-hint')?.textContent).toContain(enTranslations.chat.welcome.hintSimple);
+    expect(el.querySelector('.message')).toBeNull();
   });
 });

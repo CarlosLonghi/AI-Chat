@@ -42,6 +42,18 @@ describe('ChatWindow', () => {
     expect(el.querySelectorAll('.suggestion').length).toBe(4);
   });
 
+  it('should show the memory hint on the welcome screen unless another one is given', async () => {
+    fixture.componentRef.setInput('messages', []);
+    await fixture.whenStable();
+    const hint = () => (fixture.nativeElement as HTMLElement).querySelector('.welcome-hint')?.textContent;
+
+    expect(hint()).toContain(enTranslations.chat.welcome.hint);
+
+    fixture.componentRef.setInput('welcomeHint', 'chat.welcome.hintSimple');
+    await fixture.whenStable();
+    expect(hint()).toContain(enTranslations.chat.welcome.hintSimple);
+  });
+
   it('should show 4 different suggestions picked from the whole pool', async () => {
     fixture.componentRef.setInput('messages', []);
     await fixture.whenStable();

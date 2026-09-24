@@ -4,10 +4,12 @@
   },
   "nav": {
     "main": "Main",
-    "simpleChat": "Simple Chat",
-    "chatMemory": "Chat Memory",
-    "simpleChatShort": "Simple",
-    "chatMemoryShort": "Memory"
+    "simpleChat": "Quick question",
+    "chatMemory": "Conversations",
+    "simpleChatShort": "Quick",
+    "chatMemoryShort": "Chats",
+    "simpleChatHint": "Each question is independent, with no history",
+    "chatMemoryHint": "Your conversations are saved and the AI remembers the context"
   },
   "toolbar": {
     "language": "Language",
@@ -27,7 +29,8 @@
     "retry": "Try again",
     "welcome": {
       "title": "Hello! How can I assist you today?",
-      "hint": "Ask anything. I will remember this conversation."
+      "hint": "Ask anything. I will remember this conversation.",
+      "hintSimple": "Each message is independent: I keep no history or context."
     },
     "suggestions": {
       "dinner": "Suggest a weekly dinner menu",

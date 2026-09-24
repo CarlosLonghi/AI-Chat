@@ -77,6 +77,8 @@ export class ChatWindow {
   title = input.required<string>();
   messages = input.required<ChatMessage[]>();
   isLoading = input(false);
+  /** Translation key for the line under the welcome title. */
+  welcomeHint = input('chat.welcome.hint');
 
   send = output<string>();
 
