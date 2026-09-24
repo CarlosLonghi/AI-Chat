@@ -1,24 +1,27 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, computed, effect, inject, input, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { map } from 'rxjs';
+import { BoltIcon } from '../../shared/bolt-icon/bolt-icon';
 import { ChatHistoryResponse, ChatMessage, ChatProblemDetail, ChatSummaryResponse } from '../chat-models';
 import { ChatService } from '../chat-service';
 import { ChatWindow } from '../chat-window/chat-window';
 import { DeleteChatDialog } from './delete-chat-dialog/delete-chat-dialog';
 import { RenameChatDialog } from './rename-chat-dialog/rename-chat-dialog';
 
-const WELCOME_MESSAGE: ChatMessage = { text: 'Hello! How can I assist you today?', sender: 'bot' };
 const ERROR_MESSAGE: ChatMessage = { text: 'Sorry, something went wrong. Please try again.', sender: 'bot' };
 
 @Component({
   selector: 'app-chat-memory',
-  imports: [ChatWindow, MatButtonModule, MatIconModule, MatListModule, MatMenuModule, RouterLink, RouterLinkActive],
+  imports: [ChatWindow, BoltIcon, MatButtonModule, MatIconModule, MatMenuModule, MatSidenavModule, RouterLink, RouterLinkActive],
   templateUrl: './chat-memory.html',
   styleUrl: './chat-memory.scss',
 })
@@ -29,12 +32,19 @@ export class ChatMemory {
   private dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
 
+  isMobile = toSignal(
+    inject(BreakpointObserver).observe('(max-width: 768px)').pipe(map(state => state.matches)),
+    { initialValue: false },
+  );
+
   chatId = input<string>();
 
   chats = signal<ChatSummaryResponse[]>([]);
-  title = computed(() => this.chats().find(c => c.id === this.chatId())?.description ?? 'Chat Memory');
-  messages = signal<ChatMessage[]>([WELCOME_MESSAGE]);
+  chatsLoaded = signal(false);
+  title = computed(() => this.chats().find(c => c.id === this.chatId())?.description ?? 'New chat');
+  messages = signal<ChatMessage[]>([]);
   isLoading = signal(false);
+  drawerOpen = signal(false);
 
   private activeChatId: string | undefined;
 
@@ -52,6 +62,10 @@ export class ChatMemory {
     } else {
       this.startChat(text);
     }
+  }
+
+  closeDrawer() {
+    this.drawerOpen.set(false);
   }
 
   renameChat(chat: ChatSummaryResponse) {
@@ -120,8 +134,14 @@ export class ChatMemory {
 
   private loadChats() {
     this.chatService.getAllChats().subscribe({
-      next: (chats) => this.chats.set(chats),
-      error: (err) => console.error('Error loading chats:', err),
+      next: (chats) => {
+        this.chats.set(chats);
+        this.chatsLoaded.set(true);
+      },
+      error: (err) => {
+        console.error('Error loading chats:', err);
+        this.chatsLoaded.set(true);
+      },
     });
   }
 
@@ -132,7 +152,7 @@ export class ChatMemory {
     this.activeChatId = chatId;
 
     if (!chatId) {
-      this.messages.set([WELCOME_MESSAGE]);
+      this.messages.set([]);
       this.isLoading.set(false);
       return;
     }
