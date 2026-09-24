@@ -5,7 +5,7 @@
     [mode]="isMobile() ? 'over' : 'side'"
     [opened]="!isMobile() || drawerOpen()"
     (closedStart)="drawerOpen.set(false)"
-    aria-label="Conversations"
+    [attr.aria-label]="'memory.conversations' | transloco"
   >
     <div class="chat-list">
       @if (isMobile()) {
@@ -14,7 +14,7 @@
             <span class="zeus-mark logo"><app-bolt-icon [size]="20" /></span>
             <span class="drawer-brand-name">ZeusAI</span>
           </span>
-          <button type="button" matIconButton aria-label="Close chats" (click)="closeDrawer()">
+          <button type="button" matIconButton [attr.aria-label]="'memory.closeChats' | transloco" (click)="closeDrawer()">
             <mat-icon>close</mat-icon>
           </button>
         </div>
@@ -22,18 +22,18 @@
 
       <a matButton="filled" class="new-chat" routerLink="/chat-memory" (click)="closeDrawer()">
         <mat-icon>add</mat-icon>
-        New chat
+        {{ 'memory.newChat' | transloco }}
       </a>
 
       @if (chatsLoaded() && chats().length === 0) {
         <div class="empty-list">
           <span class="empty-icon"><mat-icon>chat_bubble_outline</mat-icon></span>
-          <span class="empty-title">No conversations yet</span>
-          <span class="empty-hint">Start a new chat and it will show up here.</span>
+          <span class="empty-title">{{ 'memory.empty.title' | transloco }}</span>
+          <span class="empty-hint">{{ 'memory.empty.hint' | transloco }}</span>
         </div>
       } @else if (chats().length > 0) {
-        <h2 class="list-label">Recent</h2>
-        <nav class="chat-nav" aria-label="Conversations">
+        <h2 class="list-label">{{ 'memory.recent' | transloco }}</h2>
+        <nav class="chat-nav" [attr.aria-label]="'memory.conversations' | transloco">
           @for (chat of chats(); track chat.id) {
             <div class="chat-item" routerLinkActive="active" #rla="routerLinkActive">
               <a
@@ -50,18 +50,18 @@
                 matIconButton
                 class="chat-options"
                 [matMenuTriggerFor]="chatMenu"
-                [attr.aria-label]="'Options for ' + chat.description"
+                [attr.aria-label]="'memory.options' | transloco: { title: chat.description }"
               >
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #chatMenu="matMenu">
                 <button mat-menu-item (click)="renameChat(chat)">
                   <mat-icon>edit</mat-icon>
-                  <span>Rename</span>
+                  <span>{{ 'memory.rename' | transloco }}</span>
                 </button>
                 <button mat-menu-item class="danger" (click)="deleteChat(chat)">
                   <mat-icon>delete</mat-icon>
-                  <span>Delete</span>
+                  <span>{{ 'memory.delete' | transloco }}</span>
                 </button>
               </mat-menu>
             </div>
@@ -74,7 +74,7 @@
   <mat-sidenav-content class="chat-main">
     <app-chat-window
       class="chat-window"
-      [title]="title()"
+      [title]="title() ?? ('memory.newChat' | transloco)"
       [messages]="messages()"
       [isLoading]="isLoading()"
       (send)="sendMessage($event)"
@@ -84,7 +84,7 @@
         type="button"
         matIconButton
         class="menu-button"
-        aria-label="Open chats"
+        [attr.aria-label]="'memory.openChats' | transloco"
         (click)="drawerOpen.set(true)"
       >
         <mat-icon>menu</mat-icon>

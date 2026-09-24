@@ -1,11 +1,12 @@
 import { Component, inject, signal } from '@angular/core';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { ChatMessage } from '../chat-models';
 import { ChatService } from '../chat-service';
 import { ChatWindow } from '../chat-window/chat-window';
 
 @Component({
   selector: 'app-simple-chat',
-  imports: [ChatWindow],
+  imports: [ChatWindow, TranslocoPipe],
   templateUrl: './simple-chat.html',
   styleUrl: './simple-chat.scss',
 })
@@ -16,7 +17,7 @@ export class SimpleChat {
   isLoading = signal(false);
 
   messages = signal<ChatMessage[]>([
-    { text: 'Hello! How can I assist you today?', sender: 'bot' }
+    { text: 'Hello! How can I assist you today?', sender: 'bot', i18nKey: 'chat.welcome.title' }
   ]);
 
   sendMessage(text: string) {
@@ -30,7 +31,7 @@ export class SimpleChat {
       },
       error: (err) => {
         console.error('Error sending message:', err);
-        this.updateMessages({ text: 'Sorry, something went wrong. Please try again.', sender: 'bot' });
+        this.updateMessages({ text: 'Sorry, something went wrong. Please try again.', sender: 'bot', i18nKey: 'chat.error' });
         this.isLoading.set(false);
       }
     });

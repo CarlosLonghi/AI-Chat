@@ -1,7 +1,7 @@
 <form [formGroup]="form" (ngSubmit)="save()">
-  <h2 mat-dialog-title>Rename chat</h2>
+  <h2 mat-dialog-title>{{ 'dialogs.rename.title' | transloco }}</h2>
   <mat-dialog-content>
-    <label class="field-label" for="chat-title-input">Title</label>
+    <label class="field-label" for="chat-title-input">{{ 'dialogs.rename.label' | transloco }}</label>
     <input
       id="chat-title-input"
       class="field-input"
@@ -14,14 +14,14 @@
     <div class="field-footer" id="chat-title-help">
       <span class="field-error" role="alert">
         @if (title.invalid && title.dirty) {
-          Title is required
+          {{ 'dialogs.rename.required' | transloco }}
         }
       </span>
       <span class="field-hint">{{ title.value.length }} / {{ maxLength }}</span>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button matButton type="button" mat-dialog-close>Cancel</button>
-    <button matButton="filled" type="submit" [disabled]="title.invalid">Save</button>
+    <button matButton type="button" mat-dialog-close>{{ 'dialogs.rename.cancel' | transloco }}</button>
+    <button matButton="filled" type="submit" [disabled]="title.invalid">{{ 'dialogs.rename.save' | transloco }}</button>
   </mat-dialog-actions>
 </form>

@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { provideRouter, Router } from '@angular/router';
 import { of } from 'rxjs';
 
+import { i18nTesting } from '../../i18n/testing';
 import { ChatMemory } from './chat-memory';
 
 describe('ChatMemory', () => {
@@ -15,7 +16,7 @@ describe('ChatMemory', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ChatMemory],
+      imports: [ChatMemory, i18nTesting],
       providers: [provideHttpClient(), provideHttpClientTesting(), provideRouter([])],
     }).compileComponents();
 

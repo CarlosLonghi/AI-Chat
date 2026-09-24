@@ -57,6 +57,10 @@
   }
 }
 
+.label-short {
+  display: none;
+}
+
 .spacer {
   flex: 1 1 auto;
 }
@@ -84,8 +88,14 @@
 
 @media (max-width: 768px) {
   .topbar {
-    gap: 8px;
-    padding: 0 12px;
+    gap: 4px;
+    padding: 0 8px;
+  }
+
+  .nav {
+    flex: 0 1 auto;
+    gap: 2px;
+    min-width: 0;
   }
 
   .brand-name {
@@ -93,7 +103,22 @@
   }
 
   .nav a {
-    padding: 0 12px;
+    padding: 0 10px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .label-full {
+    display: none;
+  }
+
+  .label-short {
+    display: inline;
+  }
+
+  .theme-toggle {
+    width: 40px;
+    height: 40px;
   }
 }
 

@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { map } from 'rxjs';
 import { BoltIcon } from '../../shared/bolt-icon/bolt-icon';
 import { ChatHistoryResponse, ChatMessage, ChatProblemDetail, ChatSummaryResponse } from '../chat-models';
@@ -17,11 +18,15 @@ import { ChatWindow } from '../chat-window/chat-window';
 import { DeleteChatDialog } from './delete-chat-dialog/delete-chat-dialog';
 import { RenameChatDialog } from './rename-chat-dialog/rename-chat-dialog';
 
-const ERROR_MESSAGE: ChatMessage = { text: 'Sorry, something went wrong. Please try again.', sender: 'bot' };
+const ERROR_MESSAGE: ChatMessage = {
+  text: 'Sorry, something went wrong. Please try again.',
+  sender: 'bot',
+  i18nKey: 'chat.error',
+};
 
 @Component({
   selector: 'app-chat-memory',
-  imports: [ChatWindow, BoltIcon, MatButtonModule, MatIconModule, MatMenuModule, MatSidenavModule, RouterLink, RouterLinkActive],
+  imports: [ChatWindow, BoltIcon, MatButtonModule, MatIconModule, MatMenuModule, MatSidenavModule, RouterLink, RouterLinkActive, TranslocoPipe],
   templateUrl: './chat-memory.html',
   styleUrl: './chat-memory.scss',
 })
@@ -31,6 +36,7 @@ export class ChatMemory {
   private router = inject(Router);
   private dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
+  private transloco = inject(TranslocoService);
 
   isMobile = toSignal(
     inject(BreakpointObserver).observe('(max-width: 768px)').pipe(map(state => state.matches)),
@@ -41,7 +47,7 @@ export class ChatMemory {
 
   chats = signal<ChatSummaryResponse[]>([]);
   chatsLoaded = signal(false);
-  title = computed(() => this.chats().find(c => c.id === this.chatId())?.description ?? 'New chat');
+  title = computed(() => this.chats().find(c => c.id === this.chatId())?.description);
   messages = signal<ChatMessage[]>([]);
   isLoading = signal(false);
   drawerOpen = signal(false);
@@ -81,11 +87,11 @@ export class ChatMemory {
           error: (err) => {
             if (err instanceof HttpErrorResponse && err.status === 404) {
               this.removeChat(chat.id);
-              this.notify('This chat no longer exists.');
+              this.notify(this.transloco.translate('memory.gone'));
               return;
             }
             console.error('Error renaming chat:', err);
-            this.notify(this.errorMessage(err, 'Could not rename the chat.'));
+            this.notify(this.errorMessage(err, 'memory.renameFailed'));
           },
         });
       });
@@ -101,7 +107,7 @@ export class ChatMemory {
         this.chatService.deleteChat(chat.id).subscribe({
           next: () => {
             this.removeChat(chat.id);
-            this.notify('Chat deleted.');
+            this.notify(this.transloco.translate('memory.deleted'));
           },
           error: (err) => {
             // Already gone (e.g. deleted in another tab): same outcome the user asked for.
@@ -110,7 +116,7 @@ export class ChatMemory {
               return;
             }
             console.error('Error deleting chat:', err);
-            this.notify(this.errorMessage(err, 'Could not delete the chat.'));
+            this.notify(this.errorMessage(err, 'memory.deleteFailed'));
           },
         });
       });
@@ -124,12 +130,12 @@ export class ChatMemory {
   }
 
   private notify(message: string) {
-    this.snackBar.open(message, 'Close', { duration: 5000 });
+    this.snackBar.open(message, this.transloco.translate('memory.close'), { duration: 5000 });
   }
 
-  private errorMessage(err: unknown, fallback: string): string {
+  private errorMessage(err: unknown, fallbackKey: string): string {
     const problem = err instanceof HttpErrorResponse ? (err.error as ChatProblemDetail | null) : null;
-    return problem?.errors?.['description'] ?? problem?.detail ?? fallback;
+    return problem?.errors?.['description'] ?? problem?.detail ?? this.transloco.translate(fallbackKey);
   }
 
   private loadChats() {
