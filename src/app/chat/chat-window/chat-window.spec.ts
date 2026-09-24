@@ -41,6 +41,19 @@ describe('ChatWindow', () => {
     expect(el.querySelectorAll('.suggestion').length).toBe(4);
   });
 
+  it('should show 4 different suggestions picked from the whole pool', async () => {
+    fixture.componentRef.setInput('messages', []);
+    await fixture.whenStable();
+
+    const pool = Object.values(enTranslations.chat.suggestions);
+    expect(pool.length).toBe(40);
+    const shown = Array.from(fixture.nativeElement.querySelectorAll('.suggestion') as NodeListOf<HTMLElement>).map(
+      (b) => b.textContent?.replace('chat_bubble_outline', '').trim() ?? '',
+    );
+    expect(new Set(shown).size).toBe(4);
+    shown.forEach((text) => expect(pool).toContain(text));
+  });
+
   it('should send a suggestion when it is clicked', async () => {
     fixture.componentRef.setInput('messages', []);
     await fixture.whenStable();
@@ -49,7 +62,8 @@ describe('ChatWindow', () => {
 
     (fixture.nativeElement.querySelector('.suggestion') as HTMLButtonElement).click();
 
-    expect(sent).toEqual([enTranslations.chat.suggestions.dinner]);
+    expect(sent.length).toBe(1);
+    expect(Object.values(enTranslations.chat.suggestions)).toContain(sent[0]);
   });
 
   it('should hide the welcome screen once there are messages or a response is loading', async () => {

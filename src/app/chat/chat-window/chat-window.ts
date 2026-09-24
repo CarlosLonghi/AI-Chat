@@ -13,7 +13,53 @@ const SUGGESTION_KEYS = [
   'chat.suggestions.boss',
   'chat.suggestions.car',
   'chat.suggestions.trip',
+  'chat.suggestions.resume',
+  'chat.suggestions.interview',
+  'chat.suggestions.email',
+  'chat.suggestions.budget',
+  'chat.suggestions.invest',
+  'chat.suggestions.save',
+  'chat.suggestions.recipe',
+  'chat.suggestions.mealprep',
+  'chat.suggestions.workout',
+  'chat.suggestions.weightloss',
+  'chat.suggestions.sleep',
+  'chat.suggestions.anxiety',
+  'chat.suggestions.focus',
+  'chat.suggestions.study',
+  'chat.suggestions.language',
+  'chat.suggestions.translate',
+  'chat.suggestions.essay',
+  'chat.suggestions.summarize',
+  'chat.suggestions.code',
+  'chat.suggestions.bug',
+  'chat.suggestions.learnCode',
+  'chat.suggestions.sql',
+  'chat.suggestions.excel',
+  'chat.suggestions.ai',
+  'chat.suggestions.business',
+  'chat.suggestions.marketing',
+  'chat.suggestions.post',
+  'chat.suggestions.gift',
+  'chat.suggestions.party',
+  'chat.suggestions.message',
+  'chat.suggestions.relationship',
+  'chat.suggestions.home',
+  'chat.suggestions.plants',
+  'chat.suggestions.pet',
+  'chat.suggestions.movie',
+  'chat.suggestions.book',
 ];
+const SUGGESTIONS_SHOWN = 4;
+
+function pickRandom<T>(items: readonly T[], count: number): T[] {
+  const pool = [...items];
+  for (let i = 0; i < count; i++) {
+    const j = i + Math.floor(Math.random() * (pool.length - i));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool.slice(0, count);
+}
 
 @Component({
   selector: 'app-chat-window',
@@ -34,8 +80,9 @@ export class ChatWindow {
 
   userInput = signal('');
 
-  suggestionKeys = SUGGESTION_KEYS;
   isEmpty = computed(() => this.messages().length === 0 && !this.isLoading());
+  // Re-picked every time the welcome screen shows up again, e.g. after starting a new chat.
+  suggestionKeys = computed(() => (this.isEmpty() ? pickRandom(SUGGESTION_KEYS, SUGGESTIONS_SHOWN) : []));
 
   constructor() {
     afterRenderEffect(() => {
