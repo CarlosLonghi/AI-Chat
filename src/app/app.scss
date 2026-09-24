@@ -35,6 +35,7 @@
   a {
     display: inline-flex;
     align-items: center;
+    gap: 8px;
     height: 40px;
     padding: 0 18px;
     border-radius: 20px;
@@ -53,6 +54,13 @@
       background: var(--zeus-tint);
       color: var(--zeus-text);
       font-weight: 600;
+    }
+
+    mat-icon {
+      flex: none;
+      width: 18px;
+      height: 18px;
+      font-size: 18px;
     }
   }
 }

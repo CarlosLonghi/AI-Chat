@@ -4,10 +4,12 @@
   },
   "nav": {
     "main": "Principal",
-    "simpleChat": "Chat Simples",
-    "chatMemory": "Chat com Memória",
-    "simpleChatShort": "Simples",
-    "chatMemoryShort": "Memória"
+    "simpleChat": "Pergunta rápida",
+    "chatMemory": "Conversas",
+    "simpleChatShort": "Rápida",
+    "chatMemoryShort": "Conversas",
+    "simpleChatHint": "Cada pergunta é independente, sem histórico",
+    "chatMemoryHint": "Suas conversas ficam salvas e a IA lembra o contexto"
   },
   "toolbar": {
     "language": "Idioma",
@@ -19,12 +21,17 @@
     "send": "Enviar",
     "placeholder": "Faça uma pergunta...",
     "waiting": "Aguardando resposta...",
+    "placeholderNew": "Faça uma nova pergunta...",
     "typing": "O assistente está digitando",
     "error": "Desculpe, algo deu errado. Tente novamente.",
     "simpleHint": "Cada mensagem é independente",
+    "copy": "Copiar resposta",
+    "copied": "Copiado",
+    "retry": "Tentar novamente",
     "welcome": {
       "title": "Olá! Como posso ajudar você hoje?",
-      "hint": "Pergunte o que quiser. Vou lembrar desta conversa."
+      "hint": "Pergunte o que quiser. Vou lembrar desta conversa.",
+      "hintSimple": "Cada mensagem é independente: não guardo histórico nem contexto."
     },
     "suggestions": {
       "dinner": "Sugira um cardápio de jantares para a semana",
@@ -67,6 +74,28 @@
       "pet": "Como treinar meu cachorro para obedecer comandos básicos?",
       "movie": "Recomende filmes e séries para assistir neste fim de semana",
       "book": "Sugira livros para quem quer desenvolver bons hábitos"
+    },
+    "quickSuggestions": {
+      "capital": "Qual é a capital da Austrália?",
+      "cups": "Quantas colheres de sopa cabem em uma xícara?",
+      "synonym": "Me dê sinônimos para a palavra “feliz”",
+      "define": "O que significa “serendipidade”?",
+      "translate": "Como se diz “bom dia” em japonês?",
+      "grammar": "Qual é a diferença entre “mau” e “mal”?",
+      "percent": "Quanto é 15% de 240?",
+      "convert": "Quantas milhas são 10 quilômetros?",
+      "egg": "Quanto tempo leva para cozinhar um ovo?",
+      "timezone": "Que horas são em Tóquio quando é meio-dia em São Paulo?",
+      "sky": "Por que o céu é azul?",
+      "war": "Em que ano terminou a Segunda Guerra Mundial?",
+      "planets": "Quantos planetas existem no sistema solar?",
+      "python": "Como inverter uma string em Python?",
+      "regex": "Qual é uma regex para validar um e-mail?",
+      "screenshot": "Qual é o atalho para tirar um print da tela no Windows?",
+      "joke": "Me conte uma piada curta",
+      "petname": "Sugira 5 nomes para um filhote de golden retriever",
+      "acronym": "O que significa a sigla API?",
+      "stain": "Como tirar uma mancha de vinho de uma camisa?"
     }
   },
   "memory": {

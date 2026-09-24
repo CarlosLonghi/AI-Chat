@@ -5,11 +5,23 @@
   </a>
 
   <nav class="nav" [attr.aria-label]="'nav.main' | transloco">
-    <a routerLink="/simple-chat" routerLinkActive="active" ariaCurrentWhenActive="page">
+    <a
+      routerLink="/simple-chat"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+      [attr.title]="'nav.simpleChatHint' | transloco"
+    >
+      <mat-icon aria-hidden="true">bolt</mat-icon>
       <span class="label-full">{{ 'nav.simpleChat' | transloco }}</span>
       <span class="label-short">{{ 'nav.simpleChatShort' | transloco }}</span>
     </a>
-    <a routerLink="/chat-memory" routerLinkActive="active" ariaCurrentWhenActive="page">
+    <a
+      routerLink="/chat-memory"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+      [attr.title]="'nav.chatMemoryHint' | transloco"
+    >
+      <mat-icon aria-hidden="true">forum</mat-icon>
       <span class="label-full">{{ 'nav.chatMemory' | transloco }}</span>
       <span class="label-short">{{ 'nav.chatMemoryShort' | transloco }}</span>
     </a>

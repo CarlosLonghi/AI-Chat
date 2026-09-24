@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { App } from './app';
-import { i18nTesting } from './i18n/testing';
+import { enTranslations, i18nTesting } from './i18n/testing';
 
 describe('App', () => {
   beforeEach(async () => {
@@ -24,6 +24,22 @@ describe('App', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.brand-name')?.textContent).toContain('ZeusAI');
     expect(compiled.querySelectorAll('.nav a').length).toBe(2);
+  });
+
+  it('should tell the two chats apart with an icon, a name and a tooltip each', async () => {
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    const links = Array.from((fixture.nativeElement as HTMLElement).querySelectorAll<HTMLAnchorElement>('.nav a'));
+
+    expect(links.map((a) => a.querySelector('.label-full')?.textContent)).toEqual([
+      enTranslations.nav.simpleChat,
+      enTranslations.nav.chatMemory,
+    ]);
+    expect(links.map((a) => a.getAttribute('title'))).toEqual([
+      enTranslations.nav.simpleChatHint,
+      enTranslations.nav.chatMemoryHint,
+    ]);
+    links.forEach((a) => expect(a.querySelector('mat-icon')).not.toBeNull());
   });
 
   it('should toggle the theme from the toolbar button', async () => {
