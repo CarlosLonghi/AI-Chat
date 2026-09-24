@@ -1,27 +1,29 @@
-import { afterRenderEffect, Component, computed, ElementRef, input, output, signal, viewChild } from '@angular/core';
+import { afterRenderEffect, Component, computed, ElementRef, inject, input, output, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { BoltIcon } from '../../shared/bolt-icon/bolt-icon';
 import { ChatMessage } from '../chat-models';
 import { MarkdownPipe } from '../markdown/markdown-pipe';
 
-const SUGGESTIONS = [
-  'Explain signals in Angular',
-  'Draft a REST API for a todo list',
-  'Summarize a long article',
-  'Help me debug a stack trace',
+const SUGGESTION_KEYS = [
+  'chat.suggestions.dinner',
+  'chat.suggestions.boss',
+  'chat.suggestions.car',
+  'chat.suggestions.trip',
 ];
 
 @Component({
   selector: 'app-chat-window',
-  imports: [MatCardModule, MatButtonModule, MatIconModule, FormsModule, MarkdownPipe, BoltIcon],
+  imports: [MatCardModule, MatButtonModule, MatIconModule, FormsModule, MarkdownPipe, BoltIcon, TranslocoPipe],
   templateUrl: './chat-window.html',
   styleUrl: './chat-window.scss',
 })
 export class ChatWindow {
 
+  private transloco = inject(TranslocoService);
   private chatContent = viewChild.required<ElementRef<HTMLDivElement>>('chatContent');
 
   title = input.required<string>();
@@ -32,7 +34,7 @@ export class ChatWindow {
 
   userInput = signal('');
 
-  suggestions = SUGGESTIONS;
+  suggestionKeys = SUGGESTION_KEYS;
   isEmpty = computed(() => this.messages().length === 0 && !this.isLoading());
 
   constructor() {
@@ -48,8 +50,8 @@ export class ChatWindow {
     this.submit(this.userInput().trim());
   }
 
-  sendSuggestion(text: string) {
-    this.submit(text);
+  sendSuggestion(key: string) {
+    this.submit(this.transloco.translate(key));
   }
 
   private submit(message: string) {

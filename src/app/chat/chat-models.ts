@@ -1,6 +1,8 @@
 export interface ChatMessage {
   text: string;
   sender: 'user' | 'bot';
+  /** Translation key; when set it is shown instead of `text`, so it follows the language. */
+  i18nKey?: string;
 }
 
 export interface SimpleChatResponse {

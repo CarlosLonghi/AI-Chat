@@ -1,12 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { enTranslations, i18nTesting } from '../../i18n/testing';
 import { ChatWindow } from './chat-window';
 
 describe('ChatWindow', () => {
   let fixture: ComponentFixture<ChatWindow>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [ChatWindow] }).compileComponents();
+    await TestBed.configureTestingModule({ imports: [ChatWindow, i18nTesting] }).compileComponents();
     fixture = TestBed.createComponent(ChatWindow);
     fixture.componentRef.setInput('title', 'Test');
   });
@@ -48,7 +49,7 @@ describe('ChatWindow', () => {
 
     (fixture.nativeElement.querySelector('.suggestion') as HTMLButtonElement).click();
 
-    expect(sent).toEqual(['Explain signals in Angular']);
+    expect(sent).toEqual([enTranslations.chat.suggestions.dinner]);
   });
 
   it('should hide the welcome screen once there are messages or a response is loading', async () => {

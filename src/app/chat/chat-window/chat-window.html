@@ -10,13 +10,13 @@
       @if (isEmpty()) {
         <section class="welcome">
           <span class="zeus-mark welcome-mark"><app-bolt-icon [size]="36" /></span>
-          <h2 class="welcome-title">Hello! How can I assist you today?</h2>
-          <p class="welcome-hint">Ask anything. I will remember this conversation.</p>
+          <h2 class="welcome-title">{{ 'chat.welcome.title' | transloco }}</h2>
+          <p class="welcome-hint">{{ 'chat.welcome.hint' | transloco }}</p>
           <div class="suggestions">
-            @for (suggestion of suggestions; track suggestion) {
-              <button type="button" class="suggestion" (click)="sendSuggestion(suggestion)">
+            @for (key of suggestionKeys; track key) {
+              <button type="button" class="suggestion" (click)="sendSuggestion(key)">
                 <span class="suggestion-icon"><mat-icon>chat_bubble_outline</mat-icon></span>
-                {{ suggestion }}
+                {{ key | transloco }}
               </button>
             }
           </div>
@@ -28,7 +28,7 @@
           @if (message.sender === 'bot') {
             <span class="zeus-mark avatar"><app-bolt-icon [size]="18" /></span>
             <div class="message-bubble bot">
-              <div class="markdown" [innerHTML]="message.text | markdown"></div>
+              <div class="markdown" [innerHTML]="(message.i18nKey ? (message.i18nKey | transloco) : message.text) | markdown"></div>
             </div>
           } @else {
             <div class="message-bubble user">{{ message.text }}</div>
@@ -39,7 +39,7 @@
       @if (isLoading()) {
         <div class="message bot">
           <span class="zeus-mark avatar"><app-bolt-icon [size]="18" /></span>
-          <div class="typing" role="status" aria-label="Assistant is typing">
+          <div class="typing" role="status" [attr.aria-label]="'chat.typing' | transloco">
             <span class="dot"></span>
             <span class="dot"></span>
             <span class="dot"></span>
@@ -53,12 +53,12 @@
     <div class="chat-input-field">
       <input
         type="text"
-        aria-label="Message"
+        [attr.aria-label]="'chat.message' | transloco"
         [ngModel]="userInput()"
         (ngModelChange)="userInput.set($event)"
         (keyup.enter)="sendMessage()"
         maxlength="256"
-        [placeholder]="isLoading() ? 'Waiting for response...' : 'Ask a question...'"
+        [placeholder]="(isLoading() ? 'chat.waiting' : 'chat.placeholder') | transloco"
         [disabled]="isLoading()"
       />
       <span class="counter">{{ userInput().length }} / 256</span>
@@ -66,7 +66,7 @@
         type="button"
         matIconButton
         class="send"
-        aria-label="Send"
+        [attr.aria-label]="'chat.send' | transloco"
         (click)="sendMessage()"
         [disabled]="userInput().trim() === '' || isLoading()"
       >

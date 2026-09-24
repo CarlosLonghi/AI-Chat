@@ -2,6 +2,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { i18nTesting } from '../../i18n/testing';
 import { SimpleChat } from './simple-chat';
 
 describe('SimpleChat', () => {
@@ -10,7 +11,7 @@ describe('SimpleChat', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SimpleChat],
+      imports: [SimpleChat, i18nTesting],
       providers: [provideHttpClient(), provideHttpClientTesting()],
     }).compileComponents();
 
